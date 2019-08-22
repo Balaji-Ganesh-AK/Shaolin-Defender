@@ -113,10 +113,11 @@ namespace Shaolin_Defender
             pos.X -= speed;
         if (Keyboard.GetState().IsKeyDown(Keys.D) && pos.X <= widthWindow - 20)
             pos.X += speed;
-        if (Keyboard.GetState().IsKeyDown(Keys.Q))
-            angle -= 0.1f;
-        if (Keyboard.GetState().IsKeyDown(Keys.E))
-            angle += 0.1f;
+            //if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            //    angle -= 0.1f;
+            //if (Keyboard.GetState().IsKeyDown(Keys.E))
+            //    angle += 0.1f;
+            angle += 1f;
 
 
         //simple collision detection
