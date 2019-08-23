@@ -3,41 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaolin Defender", "Shaolin Defender\Shaolin Defender.csproj", "{DEF52770-4EDC-4480-B27B-09C20F1F69E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaolin Defender", "Shaolin Defender\Shaolin Defender.csproj", "{4600E3B5-5608-41F3-99B5-1898A5F7A8EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
-		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
-		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|ARM.ActiveCfg = Debug|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|ARM.Build.0 = Debug|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|ARM.Deploy.0 = Debug|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x64.ActiveCfg = Debug|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x64.Build.0 = Debug|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x64.Deploy.0 = Debug|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x86.ActiveCfg = Debug|x86
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x86.Build.0 = Debug|x86
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Debug|x86.Deploy.0 = Debug|x86
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|ARM.ActiveCfg = Release|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|ARM.Build.0 = Release|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|ARM.Deploy.0 = Release|ARM
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x64.ActiveCfg = Release|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x64.Build.0 = Release|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x64.Deploy.0 = Release|x64
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x86.ActiveCfg = Release|x86
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x86.Build.0 = Release|x86
-		{DEF52770-4EDC-4480-B27B-09C20F1F69E5}.Release|x86.Deploy.0 = Release|x86
+		{4600E3B5-5608-41F3-99B5-1898A5F7A8EA}.Debug|x86.ActiveCfg = Debug|x86
+		{4600E3B5-5608-41F3-99B5-1898A5F7A8EA}.Debug|x86.Build.0 = Debug|x86
+		{4600E3B5-5608-41F3-99B5-1898A5F7A8EA}.Release|x86.ActiveCfg = Release|x86
+		{4600E3B5-5608-41F3-99B5-1898A5F7A8EA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CC11BF87-FC17-48D5-BF2E-F804A25C9897}
+		SolutionGuid = {D2C89A5B-2D31-416A-8E75-B2F49309C65E}
 	EndGlobalSection
 EndGlobal

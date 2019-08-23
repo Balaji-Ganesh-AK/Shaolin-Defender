@@ -2,6 +2,7 @@
 
 namespace Shaolin_Defender
 {
+#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -10,10 +11,12 @@ namespace Shaolin_Defender
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        [STAThread]
         static void Main()
         {
-            var factory = new MonoGame.Framework.GameFrameworkViewSource<Game1>();
-            Windows.ApplicationModel.Core.CoreApplication.Run(factory);
+            using (var game = new Game1())
+                game.Run();
         }
     }
+#endif
 }
