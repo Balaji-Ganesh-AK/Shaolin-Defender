@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using Shaolin_Defender;
-
 namespace Shaolin_Defender
 {
     /// <summary>
@@ -14,7 +12,7 @@ namespace Shaolin_Defender
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        GameController gameController = new GameController();
         int i = 0;
         // Textures for background & objects
         Texture2D mCircle; // circle (main platform)
@@ -23,7 +21,7 @@ namespace Shaolin_Defender
         Texture2D player;
         Texture2D coins;
         Texture2D fireStick;
-
+        
         // Vectors
         Vector2 mCirclePos;
         Vector2 startPos;
@@ -34,7 +32,7 @@ namespace Shaolin_Defender
 
 
         //Temp
-        
+       
 
        // Vector2 coinPos;
 
@@ -52,8 +50,8 @@ namespace Shaolin_Defender
 
         // Fonts
         private SpriteFont scoreFont;
-        private int score = 0;
-        private float timer = 100.0f;
+        
+        
         string countDown = "";
 
         // Gets width and height of the window
@@ -78,11 +76,12 @@ namespace Shaolin_Defender
 
             Content.RootDirectory = "Content";
             // Object positions (x, y)
-             playerPos = new Vector2(164, 490);// Controls the playerPosition
 
+
+            playerPos = new Vector2(164, 490);// Controls the playerPosition
             mCirclePos = new Vector2(665, 500);
-            startPos = new Vector2(165, 500);
-            endPos = new Vector2(1150, 500);
+            startPos = new Vector2(197, 500);
+            endPos = new Vector2(1090, 500);
             
         }
 
@@ -107,7 +106,7 @@ namespace Shaolin_Defender
 
 
 
-
+          
             //Coin locations
 
             
@@ -137,12 +136,12 @@ namespace Shaolin_Defender
             spriteBatch = new SpriteBatch(GraphicsDevice);
            
             // Loading Texture
-            mCircle = this.Content.Load<Texture2D>("YCircle");
-            startPlat = this.Content.Load<Texture2D>("start");
-            endPlat = this.Content.Load<Texture2D>("finish");
+            mCircle = this.Content.Load<Texture2D>("Platform");
+            startPlat = this.Content.Load<Texture2D>("Start_Line");
+            endPlat = this.Content.Load<Texture2D>("Finish_Line");
             scoreFont = Content.Load<SpriteFont>("Title");
             player = this.Content.Load<Texture2D>("Coin");
-            coins = this.Content.Load<Texture2D>("Coin");
+            coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("Fire_Ball");
 
             // TODO: use this.Content to load your game content here
@@ -166,14 +165,14 @@ namespace Shaolin_Defender
         {
             isHit = false;
             //make is only true after testing 
-            isGameOver = false;
+           
             // Roation rates
             angle1 += .01f; // main platform
             angle2 -= .012f; // type1 firewall
             angle3 += .012f; // type2 firewall
 
-            timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
-            countDown = timer.ToString("0.0");
+            gameController.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
+            countDown = gameController.timer.ToString("0.0");
 
             circleRectangle = new Rectangle((int)(mCirclePos.X), (int)(mCirclePos.Y), mCircle.Width, mCircle.Height);
             startRectangle = new Rectangle((int)(startPos.X), (int)(startPos.Y), startPlat.Width, startPlat.Height);
@@ -189,7 +188,10 @@ namespace Shaolin_Defender
                 if (playerRectangle.Intersects(coinsRectangle))
                 {
                     isHit = true;
-                    score++;
+                    gameController.increaseScore();
+
+
+                        
                     coinPos.RemoveAt(i);
                 }
             }
@@ -212,15 +214,9 @@ namespace Shaolin_Defender
 
                 }
             }
-            if (timer == 0)
+            if (gameController.timer == 0)
                 isGameOver = true;
-                //}
-                // TODO: Add your update logic here
-                // testing 
-
-                // widthWindow = GraphicsDevice.Viewport.Width;
-                //   heigthWindow = GraphicsDevice.Viewport.Height;
-
+               
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -243,7 +239,15 @@ namespace Shaolin_Defender
             if (Keyboard.GetState().IsKeyDown(Keys.E))
                 angle += 0.1f;
             //angle += 1f;
+            if (isGameOver == true)
+            {
+                gameController.reset();
+                isGameOver = false;
+                playerPos = new Vector2(164, 490);
 
+
+            }
+         
             base.Update(gameTime);
         }
 
@@ -284,8 +288,9 @@ namespace Shaolin_Defender
             //  spriteBatch.Draw(player, position:playerPos);
 
             // Score & Timer
+           
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + score, new Vector2(1270, 10), Color.Black); // score
+            spriteBatch.DrawString(scoreFont, "Score: " +gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
             spriteBatch.DrawString(scoreFont, "x , y " + playerPos.X + " " + playerPos.Y, new Vector2(400, 400), Color.Black);
             //spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
             spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);

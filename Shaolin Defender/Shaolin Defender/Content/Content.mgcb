@@ -49,7 +49,7 @@
 /processorParam:TextureFormat=Color
 /build:coin_1.png
 
-#begin finish.png
+#begin Finish_Line.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -59,7 +59,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:finish.png
+/build:Finish_Line.png
 
 #begin Fire_Ball.png
 /importer:TextureImporter
@@ -97,6 +97,18 @@
 /processorParam:TextureFormat=Color
 /build:Gcircle.png
 
+#begin Platform.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Platform.png
+
 #begin RedBoi.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,7 +121,7 @@
 /processorParam:TextureFormat=Color
 /build:RedBoi.png
 
-#begin start.png
+#begin Start.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,7 +131,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:start.png
+/build:Start.png;Start_Line.png
 
 #begin Title.spritefont
 /importer:FontDescriptionImporter
