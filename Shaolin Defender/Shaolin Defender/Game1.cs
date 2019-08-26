@@ -189,7 +189,7 @@ namespace Shaolin_Defender
                 {
                     isHit = true;
                     gameController.increaseScore();
-
+                    
 
                         
                     coinPos.RemoveAt(i);
@@ -214,7 +214,7 @@ namespace Shaolin_Defender
 
                 }
             }
-            if (gameController.timer == 0)
+            if (gameController.timer <= 0)
                 isGameOver = true;
                
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -239,11 +239,20 @@ namespace Shaolin_Defender
             if (Keyboard.GetState().IsKeyDown(Keys.E))
                 angle += 0.1f;
             //angle += 1f;
+
+            // Resets the game!
             if (isGameOver == true)
             {
                 gameController.reset();
                 isGameOver = false;
                 playerPos = new Vector2(164, 490);
+                //remove the remaining coins and respwan them again
+                coinPos.Clear();
+                //readd all the coins again
+                coinPos.Add(new Vector2(454, 252));
+                coinPos.Add(new Vector2(698, 184));
+                coinPos.Add(new Vector2(968, 474));
+                coinPos.Add(new Vector2(478, 780));
 
 
             }
@@ -291,10 +300,10 @@ namespace Shaolin_Defender
            
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
             spriteBatch.DrawString(scoreFont, "Score: " +gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
-            spriteBatch.DrawString(scoreFont, "x , y " + playerPos.X + " " + playerPos.Y, new Vector2(400, 400), Color.Black);
-            //spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
-            spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
-            spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
+            //spriteBatch.DrawString(scoreFont, "x , y " + playerPos.X + " " + playerPos.Y, new Vector2(400, 400), Color.Black);
+            ////spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
+            //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
+            //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
 
             if (isGameOver == true)
             {
