@@ -43,7 +43,7 @@ namespace Shaolin_Defender
             }
             if (Keyboard.GetState().IsKeyDown(Keys.E))
                 angle += 0.1f;
-
+            //
         }
         public void playerRotation(Vector2 dir)
         {
