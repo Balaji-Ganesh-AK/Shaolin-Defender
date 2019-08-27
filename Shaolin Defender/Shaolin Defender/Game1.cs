@@ -59,7 +59,9 @@ namespace Shaolin_Defender
         // Gets width and height of the window
         private int widthWindow;
         private int heigthWindow;
+        //radius
 
+        float radius;
         // MovementControls
         
         private float angle = 0; // angle rotation
@@ -236,14 +238,13 @@ namespace Shaolin_Defender
             }
             else
                 isInside = false;
+            
             if (isInside == true)
             {
-                if (player.playerPos.X < 672)//`&& player.playerPos.Y > 490)
-                {
-                    player.playerRotation();
+                Vector2 dir = mCirclePos - player.playerPos;
+                player.playerRotation(dir);
 
 
-                }
             }
 
 
@@ -315,7 +316,7 @@ namespace Shaolin_Defender
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
             spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
             spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
-            ////spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
+           spriteBatch.DrawString(scoreFont, "radius" + radius, new Vector2(600, 600), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
             if (isInside == true)

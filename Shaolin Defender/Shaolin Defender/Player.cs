@@ -12,11 +12,13 @@ namespace Shaolin_Defender
     {
         public  Vector2 playerPos;
         public  Rectangle playerRectangle;
-        public Vector2 newPlayerPos;
+
+        Vector2 perpendicualr;
         int speed = 4;
-        float dragSpeed = 1.0f;
+        float dragSpeed = 0.01f;
+        float maxDragSpeed;
         float angle = 0;
-        float turnAngle = .5f;
+      //  float turnAngle = .5f;
         public void playerMovement()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))//&& Player.playerPos.Y>0 + player.Height/2)
@@ -43,14 +45,11 @@ namespace Shaolin_Defender
                 angle += 0.1f;
 
         }
-        public void playerRotation()
+        public void playerRotation(Vector2 dir)
         {
-            
-                
-                    playerPos.X += dragSpeed;
-                    playerPos.Y -= dragSpeed;
-              
-            
+
+            perpendicualr = new Vector2(-dir.Y, dir.X);
+            playerPos -= perpendicualr * dragSpeed;
         }
 
         public Vector2 getPlayerPos()
