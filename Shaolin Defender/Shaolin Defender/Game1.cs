@@ -260,7 +260,7 @@ namespace Shaolin_Defender
             {
                 gameController.reset();
                 isGameOver = false;
-                player.playerPos = new Vector2(164, 490);
+                playerPos = new Vector2(164, 490);
                 //remove the remaining coins and respwan them again
                 coinPos.Clear();
                 //re-add all the coins again
@@ -276,15 +276,15 @@ namespace Shaolin_Defender
                 isInside = true;
             }
             // Is player on starting platform?
-            else if ((playerPos - startPos).Length() < 350)
-            {
-                isInsideS = true;
-            }
+        //    else if ((playerPos - startPos).Length() < 350)
+        //    {
+        //       isInsideS = true;
+        //    }
             // Is player on ending platform?
-            else if ((playerPos - endPos).Length() < 350)
-            {
-                isInsideE = true;
-            }
+        //    else if ((playerPos - endPos).Length() < 350)
+        //    {
+        //        isInsideE = true;
+        //    }
             else
             {
                 //restart
@@ -326,8 +326,6 @@ namespace Shaolin_Defender
             for (i = 0; i < fireStickPos.Count; i++)
             {
                 spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 1);
-                
-
             }
             //  spriteBatch.Draw(player, position:Player.playerPos);
 
@@ -345,16 +343,16 @@ namespace Shaolin_Defender
                 spriteBatch.DrawString(scoreFont, "the player is inside the circle ", new Vector2(400, 400), Color.Black);
                 //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
             }
-            else if (isInsideS == true)
-            {
-                spriteBatch.DrawString(scoreFont, "the player is inside the start plat ", new Vector2(400, 400), Color.Black);
-                //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
-            }
-            else if (isInsideE == true)
-            {
-                spriteBatch.DrawString(scoreFont, "the player is inside the end plat ", new Vector2(400, 400), Color.Black);
-                //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
-            }
+        //    else if (isInsideS == true)
+         //   {
+         //       spriteBatch.DrawString(scoreFont, "the player is inside the start plat ", new Vector2(400, 400), Color.Black);
+         //       //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
+        //    }
+        //    else if (isInsideE == true)
+        //    {
+         //       spriteBatch.DrawString(scoreFont, "the player is inside the end plat ", new Vector2(400, 400), Color.Black);
+         //       //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
+         //   }
             else
             {
                 //spriteBatch.Draw(player, Player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
