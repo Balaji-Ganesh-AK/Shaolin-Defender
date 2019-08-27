@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="GameController.cs" />
-    <Compile Include="Movement.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
