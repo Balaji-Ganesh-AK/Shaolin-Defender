@@ -21,6 +21,7 @@ namespace Shaolin_Defender
         Texture2D player;
         Texture2D coins;
         Texture2D fireStick;
+        Texture2D backGround;
         
         // Vectors
         Vector2 mCirclePos;
@@ -42,7 +43,7 @@ namespace Shaolin_Defender
         Rectangle endRectangle;
         Rectangle playerRectangle;
         Rectangle coinsRectangle;
-        Rectangle fireStickRectangle;
+        Rectangle mainFrame;
         //
        
         List<Rectangle> fireStickRectangleList = new List<Rectangle>(5);
@@ -66,6 +67,8 @@ namespace Shaolin_Defender
         private float angle3 = 0; // rotation for wall type 2
 
         // Bool for collision detection
+        bool isInside = false;
+        bool isOutside = false;
         bool isHit = false;
         //Game over 
         bool isGameOver = false;
@@ -142,8 +145,9 @@ namespace Shaolin_Defender
             scoreFont = Content.Load<SpriteFont>("Title");
             player = this.Content.Load<Texture2D>("Coin");
             coins = this.Content.Load<Texture2D>("coin_1");
-            fireStick = this.Content.Load<Texture2D>("Fire_Ball");
-
+            fireStick = this.Content.Load<Texture2D>("Fire_Ball_1");
+            backGround = this.Content.Load<Texture2D>("SpikePit");
+                
             // TODO: use this.Content to load your game content here
         }
 
@@ -164,6 +168,7 @@ namespace Shaolin_Defender
         protected override void Update(GameTime gameTime)
         {
             isHit = false;
+            isInside = false;
             //make is only true after testing 
            
             // Roation rates
@@ -182,16 +187,12 @@ namespace Shaolin_Defender
             //Checking if the player hit the coins
             for (int i =0;i < coinPos.Count; i++)
             {
-
                 coinsRectangle = new Rectangle((int)(coinPos[i].X), (int)(coinPos[i].Y), coins.Width, coins.Height);
 
                 if (playerRectangle.Intersects(coinsRectangle))
                 {
                     isHit = true;
                     gameController.increaseScore();
-                    
-
-                        
                     coinPos.RemoveAt(i);
                 }
             }
@@ -201,21 +202,21 @@ namespace Shaolin_Defender
             //fireStickRectangle = new Rectangle((int)(tempx), (int)(tempy), fireStick.Width, fireStick.Height);
             for (int i = 0; i < fireStickPos.Count; i++)
             {
-
-
                 //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
                 ////fireStickRectangle = new Rectangle();
                 if((fireStickPos[i] - playerPos).Length() < 65)
-                        
-
-                 
                 {
                     isGameOver = true;
-
                 }
             }
             if (gameController.timer <= 0)
                 isGameOver = true;
+            //Checking if the player is outside
+
+            if (isInside = false && isOutside == true)
+            {
+                isGameOver = true;
+            }
                
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -256,7 +257,10 @@ namespace Shaolin_Defender
 
 
             }
-         
+            if ((playerPos- mCirclePos).Length() < 350)
+            {
+                isInside = true;
+            }
             base.Update(gameTime);
         }
 
@@ -277,38 +281,54 @@ namespace Shaolin_Defender
             Vector2 originEnd = new Vector2(endPlat.Width / 2, endPlat.Height / 2);
             Vector2 origin = new Vector2(player.Width / 2, player.Height / 2);
             
+            //Vector2 originForPeople = new Vector2();
+            
+
             Vector2 fireStickOrigin = new Vector2(fireStick.Width / 2, fireStick.Height / 2);
 
-            spriteBatch.Draw(mCircle, mCirclePos, null, Color.Yellow, angle1, originMain, 3, SpriteEffects.None, 0f);
-            spriteBatch.Draw(startPlat, startPos, null, Color.Green, 0, originStart, 1.7f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(endPlat, endPos, null, Color.White, 0, originEnd, 1.15f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originMain, 3, SpriteEffects.None, 1);
+            spriteBatch.Draw(startPlat, startPos, null, Color.White, 0, originStart, 1.7f, SpriteEffects.None, 1);
+            spriteBatch.Draw(endPlat, endPos, null, Color.White, 0, originEnd, 1.15f, SpriteEffects.None, 1);
             spriteBatch.Draw(player, playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+            
             //
-            for (i= 0; i < coinPos.Count; i++)
+            for (i = 0; i < coinPos.Count; i++)
             {
                 spriteBatch.Draw(coins, coinPos[i], Color.White);
             }
-            for (i = 0; i<fireStickPos.Count;i++)
+            for (i = 0; i < fireStickPos.Count; i++)
             {
-                spriteBatch.Draw(fireStick, fireStickPos[i], null,Color.White, angle1,fireStickOrigin,1.0f,SpriteEffects.None,1);
-
+                spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 1);
+                
 
             }
             //  spriteBatch.Draw(player, position:playerPos);
 
             // Score & Timer
-           
+
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " +gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
             //spriteBatch.DrawString(scoreFont, "x , y " + playerPos.X + " " + playerPos.Y, new Vector2(400, 400), Color.Black);
             ////spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
-
-            if (isGameOver == true)
+            if (isInside == true)
             {
-                spriteBatch.DrawString(scoreFont, "Collision detected", new Vector2(500,500 ), Color.Black);
+                //spriteBatch.DrawString(scoreFont, "the player is inside the circle ", new Vector2(400, 400), Color.Black);
+                //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
+               
+
             }
+            else
+            {
+                //spriteBatch.Draw(player, playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+
+                isOutside = true;
+            }
+            //if (isOutside == true)
+            //{
+            //    spriteBatch.DrawString(scoreFont, "Collision detected", new Vector2(500,500 ), Color.Black);
+            //}
 
             spriteBatch.End();
             //testing 
