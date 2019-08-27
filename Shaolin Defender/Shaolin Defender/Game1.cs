@@ -13,12 +13,13 @@ namespace Shaolin_Defender
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameController gameController = new GameController();
+        Player player = new Player();
         int i = 0;
         // Textures for background & objects
         Texture2D mCircle; // circle (main platform)
         Texture2D startPlat; // start platform
         Texture2D endPlat; // end platform
-        Texture2D player;
+        Texture2D playerTexture;
         Texture2D coins;
         Texture2D fireStick;
         Texture2D backGround;
@@ -27,7 +28,7 @@ namespace Shaolin_Defender
         Vector2 mCirclePos;
         Vector2 startPos;
         Vector2 endPos;
-        Vector2 playerPos;
+        //Vector2 Player.playerPos;
         List<Vector2> coinPos= new List<Vector2>(5); // list to store the location of the coins
         List<Vector2> fireStickPos = new List<Vector2>(5);//list to store the fire stick locations
 
@@ -41,9 +42,9 @@ namespace Shaolin_Defender
         Rectangle circleRectangle;
         Rectangle startRectangle;
         Rectangle endRectangle;
-        Rectangle playerRectangle;
+       // Rectangle playerRectangle;
         Rectangle coinsRectangle;
-        Rectangle mainFrame;
+       // Rectangle mainFrame;
         //
        
         List<Rectangle> fireStickRectangleList = new List<Rectangle>(5);
@@ -60,7 +61,7 @@ namespace Shaolin_Defender
         private int heigthWindow;
 
         // MovementControls
-        private int speed = 2;// speed;
+        
         private float angle = 0; // angle rotation
         private float angle1 = 0; // angle for rotation of circle
         private float angle2 = 0; // rotation for wall type 1
@@ -69,7 +70,7 @@ namespace Shaolin_Defender
         // Bool for collision detection
         bool isInside = false;
         bool isOutside = false;
-        bool isHit = false;
+        bool isHit;
         //Game over 
         bool isGameOver = false;
 
@@ -81,7 +82,7 @@ namespace Shaolin_Defender
             // Object positions (x, y)
 
 
-            playerPos = new Vector2(164, 490);// Controls the playerPosition
+            player.playerPos = new Vector2(164, 490);// Controls the Player.playerPosition
             mCirclePos = new Vector2(665, 500);
             startPos = new Vector2(197, 500);
             endPos = new Vector2(1090, 500);
@@ -143,7 +144,7 @@ namespace Shaolin_Defender
             startPlat = this.Content.Load<Texture2D>("Start_Line");
             endPlat = this.Content.Load<Texture2D>("Finish_Line");
             scoreFont = Content.Load<SpriteFont>("Title");
-            player = this.Content.Load<Texture2D>("Coin");
+            playerTexture = this.Content.Load<Texture2D>("Coin");
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("Fire_Ball_1");
             backGround = this.Content.Load<Texture2D>("SpikePit");
@@ -182,14 +183,14 @@ namespace Shaolin_Defender
             circleRectangle = new Rectangle((int)(mCirclePos.X), (int)(mCirclePos.Y), mCircle.Width, mCircle.Height);
             startRectangle = new Rectangle((int)(startPos.X), (int)(startPos.Y), startPlat.Width, startPlat.Height);
             endRectangle = new Rectangle((int)(endPos.X), (int)(endPos.Y), endPlat.Width, endPlat.Height);
-            playerRectangle = new Rectangle((int)(playerPos.X), (int)(playerPos.Y), player.Width, player.Height);
+            player.playerRectangle = new Rectangle((int)(player.playerPos.X), (int)(player.playerPos.Y), playerTexture.Width, playerTexture.Height);
 
             //Checking if the player hit the coins
             for (int i =0;i < coinPos.Count; i++)
             {
                 coinsRectangle = new Rectangle((int)(coinPos[i].X), (int)(coinPos[i].Y), coins.Width, coins.Height);
 
-                if (playerRectangle.Intersects(coinsRectangle))
+                if (player.playerRectangle.Intersects(coinsRectangle))
                 {
                     isHit = true;
                     gameController.increaseScore();
@@ -204,7 +205,7 @@ namespace Shaolin_Defender
             {
                 //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
                 ////fireStickRectangle = new Rectangle();
-                if((fireStickPos[i] - playerPos).Length() < 65)
+                if((fireStickPos[i] - player.playerPos).Length() < 65)
                 {
                     isGameOver = true;
                 }
@@ -222,23 +223,31 @@ namespace Shaolin_Defender
                 Exit();
 
             //claming player movements
-           // playerPos.X = MathHelper.Clamp(playerPos.X,0, 1190-player.Width);
-         //   playerPos.X = MathHelper.Clamp(0,playerPos.Y, Window.ClientBounds.Height - player.Height);
+            // Player.playerPos.X = MathHelper.Clamp(Player.playerPos.X,0, 1190-player.Width);
+            //   Player.playerPos.X = MathHelper.Clamp(0,Player.playerPos.Y, Window.ClientBounds.Height - player.Height);
 
             // Keymovements
+                player.playerMovement();
+            // player.playerMovementWithRotation();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) )//&& playerPos.Y>0 + player.Height/2)
-                playerPos.Y -= speed;
-            if (Keyboard.GetState().IsKeyDown(Keys.S) )//&& playerPos.Y < 390)
-                playerPos.Y += speed;
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) //&& playerPos.X>0+player.Width/2)
-                playerPos.X -= speed;
-            if (Keyboard.GetState().IsKeyDown(Keys.D))// && playerPos.X < 390)
-                playerPos.X += speed;
-            if (Keyboard.GetState().IsKeyDown(Keys.Q))
-                angle -= 0.1f;
-            if (Keyboard.GetState().IsKeyDown(Keys.E))
-                angle += 0.1f;
+            if ((player.playerPos - mCirclePos).Length() < 350)
+            {
+                isInside = true;
+            }
+            else
+                isInside = false;
+            if (isInside == true)
+            {
+                if (player.playerPos.X < 672)//`&& player.playerPos.Y > 490)
+                {
+                    player.playerRotation();
+
+
+                }
+            }
+
+
+
             //angle += 1f;
 
             // Resets the game!
@@ -246,7 +255,7 @@ namespace Shaolin_Defender
             {
                 gameController.reset();
                 isGameOver = false;
-                playerPos = new Vector2(164, 490);
+                player.playerPos = new Vector2(164, 490);
                 //remove the remaining coins and respwan them again
                 coinPos.Clear();
                 //readd all the coins again
@@ -257,10 +266,7 @@ namespace Shaolin_Defender
 
 
             }
-            if ((playerPos- mCirclePos).Length() < 350)
-            {
-                isInside = true;
-            }
+          
             base.Update(gameTime);
         }
 
@@ -275,11 +281,11 @@ namespace Shaolin_Defender
             // TODO: Add your drawing code here
             //testing 
             spriteBatch.Begin();
-            Rectangle sourceRectangle = new Rectangle(0, 0, player.Width, player.Height);
+            Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
             Vector2 originMain = new Vector2(mCircle.Width / 2, mCircle.Height / 2);
             Vector2 originStart = new Vector2(startPlat.Width / 2, startPlat.Height / 2);
             Vector2 originEnd = new Vector2(endPlat.Width / 2, endPlat.Height / 2);
-            Vector2 origin = new Vector2(player.Width / 2, player.Height / 2);
+            Vector2 origin = new Vector2(playerTexture.Width / 2, playerTexture.Height / 2);
             
             //Vector2 originForPeople = new Vector2();
             
@@ -289,7 +295,7 @@ namespace Shaolin_Defender
             spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originMain, 3, SpriteEffects.None, 1);
             spriteBatch.Draw(startPlat, startPos, null, Color.White, 0, originStart, 1.7f, SpriteEffects.None, 1);
             spriteBatch.Draw(endPlat, endPos, null, Color.White, 0, originEnd, 1.15f, SpriteEffects.None, 1);
-            spriteBatch.Draw(player, playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+            spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
             
             //
             for (i = 0; i < coinPos.Count; i++)
@@ -302,26 +308,26 @@ namespace Shaolin_Defender
                 
 
             }
-            //  spriteBatch.Draw(player, position:playerPos);
+            //  spriteBatch.Draw(player, position:Player.playerPos);
 
             // Score & Timer
 
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
             spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore(), new Vector2(1270, 10), Color.Black); // score
-            //spriteBatch.DrawString(scoreFont, "x , y " + playerPos.X + " " + playerPos.Y, new Vector2(400, 400), Color.Black);
+            spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
             ////spriteBatch.DrawString(scoreFont, "window(x , y )" + Window.ClientBounds.Width + " " + Window.ClientBounds.Height, new Vector2(500, 400), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
             //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
             if (isInside == true)
             {
                 //spriteBatch.DrawString(scoreFont, "the player is inside the circle ", new Vector2(400, 400), Color.Black);
-                //spriteBatch.Draw(player, playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
+                //spriteBatch.Draw(player, Player.playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
                
 
             }
             else
             {
-                //spriteBatch.Draw(player, playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+                //spriteBatch.Draw(player, Player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
                 isOutside = true;
             }
