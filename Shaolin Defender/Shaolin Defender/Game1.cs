@@ -62,9 +62,9 @@ namespace Shaolin_Defender
             // Object positions (x, y)
             // playerPos = new Vector2(700, 700);// Controls the playerPosition
 
-            mCirclePos = new Vector2(665, 500);
-            startPos = new Vector2(165, 500);
-            endPos = new Vector2(1150, 500);
+            mCirclePos = new Vector2(765, 500);
+            startPos = new Vector2(195, 500);
+            endPos = new Vector2(1320, 500);
         }
 
         /// <summary>
@@ -171,6 +171,13 @@ namespace Shaolin_Defender
                 angle += 0.1f;
             //angle += 1f;
 
+
+            if (timer == 0)
+            {
+
+            }
+
+
             base.Update(gameTime);
         }
 
@@ -190,7 +197,7 @@ namespace Shaolin_Defender
             Vector2 originStart = new Vector2(startPlat.Width / 2, startPlat.Height / 2);
             Vector2 originEnd = new Vector2(endPlat.Width / 2, endPlat.Height / 2);
             Vector2 origin = new Vector2(player.Width / 2, player.Height / 2);
-            spriteBatch.Draw(mCircle, mCirclePos, null, Color.Yellow, angle1, originMain, 3, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mCircle, mCirclePos, null, Color.Yellow, angle1, originMain, 3.6f, SpriteEffects.None, 0f);
             spriteBatch.Draw(startPlat, startPos, null, Color.Green, 0, originStart, 1.7f, SpriteEffects.None, 0f);
             spriteBatch.Draw(endPlat, endPos, null, Color.White, 0, originEnd, 1.15f, SpriteEffects.None, 0f);
             spriteBatch.Draw(player, playerPos * 2, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
