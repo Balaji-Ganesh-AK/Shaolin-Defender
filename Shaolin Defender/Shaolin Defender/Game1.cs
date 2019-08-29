@@ -158,7 +158,9 @@ namespace Shaolin_Defender
             endPlat = this.Content.Load<Texture2D>("Finish_Line");
             scoreFont = Content.Load<SpriteFont>("Title");
             gameOverFont = Content.Load<SpriteFont>("GameOver");
+            //playerTexture = this.Content.Load<Texture2D>("Cowboy_man");
             playerTexture = this.Content.Load<Texture2D>("Coin");
+
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             backGround = this.Content.Load<Texture2D>("SpikePit2");
@@ -286,6 +288,7 @@ namespace Shaolin_Defender
             // Game over state
             if (test == true && isInside == false)
             {
+                
                 if (player.playerRectangle.Intersects(safeZone) == true)
                 {
                     player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZone.Top, 700);
@@ -307,6 +310,8 @@ namespace Shaolin_Defender
             {
                 isCoinDone = true;
             }
+            else
+                isCoinDone = false;
         
             
             if (isCoinDone == true && player.playerRectangle.Intersects(winZone)==true)
@@ -342,7 +347,7 @@ namespace Shaolin_Defender
                 }
 
             }
-            if (isInside == false)
+            if (test == false)
             {
                 player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZoneStart.Top, safeZoneStart.Bottom - 50);
             }
