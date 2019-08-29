@@ -18,8 +18,6 @@ namespace Shaolin_Defender
         public void increaseScore()
         {
             score++;
-            
-
         }
         public int getScore()
         {
@@ -33,16 +31,13 @@ namespace Shaolin_Defender
             }
             else
                 return 0;
-
         }
         public void reset()
         {
             score = 0;
-           
         }
         public void resetTimer()
         {
-            
             timer = 40.00f;
         }
     }

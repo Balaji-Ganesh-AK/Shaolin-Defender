@@ -15,7 +15,9 @@ namespace Shaolin_Defender
         GameController gameController = new GameController();
         Player player = new Player();
         int i = 0;
+
         // Textures for background & objects
+        Texture2D background;
         Texture2D bgPlat;
         Texture2D mCircle; // circle (main platform)
         Texture2D startPlat; // start platform
@@ -24,15 +26,20 @@ namespace Shaolin_Defender
         Texture2D coins;
         Texture2D fireStick;
         Texture2D backGround;
+        Texture2D blur;
 
 
         // Vectors
+        Vector2 backgroundPos;
+        Vector2 backgroundPos2;
         Vector2 bgPlatPos;
         Vector2 mCirclePos;
         Vector2 startPos;
         Vector2 endPos;
+        Vector2 blurPos;
+
         //Vector2 Player.playerPos;
-        List<Vector2> coinPos= new List<Vector2>(5); // list to store the location of the coins
+        List<Vector2> coinPos = new List<Vector2>(5); // list to store the location of the coins
         List<Vector2> fireStickPos = new List<Vector2>(5);//list to store the fire stick locations
        // Vector2 coinPos;
 
@@ -95,12 +102,14 @@ namespace Shaolin_Defender
 
             Content.RootDirectory = "Content";
             // Object positions (x, y)
-            bgPlatPos = new Vector2(210, 115);
-            player.playerPos = new Vector2(264, 490);// Controls the Player.playerPosition
+            backgroundPos = new Vector2(0, 0);
+            backgroundPos2 = new Vector2(1023, 0);
+            bgPlatPos = new Vector2(255, 160);
+            player.playerPos = new Vector2(154, 465);// Controls the Player.playerPosition
             mCirclePos = new Vector2(750, 500);
             startPos = new Vector2(297, 500);
             endPos = new Vector2(1190, 500);
-            
+            blurPos = new Vector2(0, 0);
         }
 
         /// <summary>
@@ -152,8 +161,9 @@ namespace Shaolin_Defender
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Loading Texture
+            background = this.Content.Load<Texture2D>("SpikePit");
             bgPlat = this.Content.Load<Texture2D>("background"); 
-            mCircle = this.Content.Load<Texture2D>("Platform");
+            mCircle = this.Content.Load<Texture2D>("Platform1");
             startPlat = this.Content.Load<Texture2D>("Start_Line");
             endPlat = this.Content.Load<Texture2D>("Finish_Line");
             scoreFont = Content.Load<SpriteFont>("Title");
@@ -164,6 +174,7 @@ namespace Shaolin_Defender
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             backGround = this.Content.Load<Texture2D>("SpikePit2");
+            blur = this.Content.Load<Texture2D>("blur");
             //test
             whiteRectangle = new Texture2D(GraphicsDevice,1,1);
             whiteRectangle.SetData(new[] { Color.White});
@@ -252,20 +263,19 @@ namespace Shaolin_Defender
             {
                 isInside = true;
                 test = true;
-
-
             }
 
             test_1 = test;
-            //Controlls player Rotation inside the circle  
 
+            //Controlls player Rotation inside the circle  
             if (isInside == true)
             {
                 Vector2 dir = mCirclePos - player.playerPos;
                 player.playerRotation(dir);
             }
 
-
+            // Fireball vertical movement
+            //fireStickPos. += speed;
 
             //angle += 1f;
 
@@ -312,11 +322,9 @@ namespace Shaolin_Defender
             }
             else
                 isCoinDone = false;
-        
             
             if (isCoinDone == true && player.playerRectangle.Intersects(winZone)==true)
             {
-
                 isWinState = true;
                 isCoinDone = false;
                 
@@ -327,7 +335,6 @@ namespace Shaolin_Defender
                     isWinState = false;
                     isPause = false;
                     isTimerUp = false;
-
                 }
                 
             }
@@ -340,10 +347,9 @@ namespace Shaolin_Defender
                 {
                      gameController.resetTimer();
                      isGameOver = true;
-                    isWinState = false;
-                    isPause = false;
+                     isWinState = false;
+                     isPause = false;
                      isTimerUp = false;
-                    
                 }
 
             }
@@ -352,7 +358,6 @@ namespace Shaolin_Defender
                 player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZoneStart.Top, safeZoneStart.Bottom - 50);
             }
   
-
             base.Update(gameTime);
         }
 
@@ -362,12 +367,13 @@ namespace Shaolin_Defender
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.OrangeRed);
 
             // TODO: Add your drawing code here
             //testing 
             spriteBatch.Begin();
             Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
+            Vector2 backgroundOrigin = new Vector2(0, 0);
             Vector2 originBG = new Vector2(bgPlat.Width / 2, bgPlat.Height / 2);
             Vector2 originMain = new Vector2(mCircle.Width / 2, mCircle.Height / 2);
             Vector2 originStart = new Vector2(startPlat.Width / 2, startPlat.Height / 2);
@@ -375,11 +381,11 @@ namespace Shaolin_Defender
             Vector2 origin = new Vector2(playerTexture.Width / 2, playerTexture.Height / 2);
             
             //Vector2 originForPeople = new Vector2();
-            
-
             Vector2 fireStickOrigin = new Vector2(fireStick.Width / 2, fireStick.Height / 2);
-            spriteBatch.Draw(bgPlat, bgPlatPos, null, Color.White, 0, originMain, 1.7f, SpriteEffects.None, 1);
-            spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originMain, 3.5f, SpriteEffects.None, 1);
+            spriteBatch.Draw(background, backgroundPos, null, Color.White, 0, backgroundOrigin, 1f, SpriteEffects.None, 1);
+            spriteBatch.Draw(background, backgroundPos2, null, Color.White, 0, backgroundOrigin, 1f, SpriteEffects.None, 1);
+            spriteBatch.Draw(bgPlat, bgPlatPos, null, Color.White, 0, originMain, 1.71f, SpriteEffects.None, 1);
+            spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originMain, 2.9f, SpriteEffects.None, 1);
             //spriteBatch.Draw(startPlat, startPos, null, Color.White, 0, originStart, 1.7f, SpriteEffects.None, 1);
             //spriteBatch.Draw(endPlat, endPos, null, Color.White, 0, originEnd, 1.15f, SpriteEffects.None, 1);
             spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
@@ -391,36 +397,53 @@ namespace Shaolin_Defender
             }
             for (i = 0; i < fireStickPos.Count; i++)
             {
-                spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 1);
+                if (i % 2 == 0)
+                {
+                    spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 1);
+                }
                 
+                if (i % 2 == 1)
+                {
+                    spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 1);
+                }
 
             }
             //  spriteBatch.Draw(player, position:Player.playerPos);
 
             // Score & Timer
 
-            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 10), Color.Black); // score
+            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.LightYellow); // timer
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 950), Color.LightYellow); // score
             //spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
            // spriteBatch.DrawString(scoreFont, "radius" + player.playerRectangle.Intersects(winZone), new Vector2(600, 600), Color.Black);
-            //spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(160, 400), Color.Black); // end state text
+            
             //spriteBatch.DrawString(scoreFont, "Replay?  Type : y - or - n", new Vector2(400, 550), Color.Black);
 
             if (isCoinDone == true)
             {
-                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(640,930),Color.Black );
+                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(430, 20), Color.Orange);
             }
             //mid screen popup
             if (isTimerUp == true)
             {
-                spriteBatch.DrawString(scoreFont, "You LOSE!! ", new Vector2(100), Color.Red);
-                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(100, 930), Color.Red);
+                spriteBatch.Draw(blur, blurPos, null, Color.White, 0, originMain, 2.5f, SpriteEffects.None, 1);
+                spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(160, 400), Color.Black); // end state text
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(350, 550), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(570, 550), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(770, 550), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.Black); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 950), Color.Black); // score
             }
             // win state texts
             if (isWinState == true)
             {
-                spriteBatch.DrawString(scoreFont, "You Won!! ", new Vector2(100), Color.Red);
-                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(100,930), Color.Red);
+                spriteBatch.Draw(blur, blurPos, null, Color.White, 0, originMain, 2.5f, SpriteEffects.None, 1);
+                spriteBatch.DrawString(gameOverFont, "YOU WON!!", new Vector2(230, 400), Color.DarkOliveGreen);
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(350, 550), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(570, 550), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(770,550), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.Black); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 950), Color.Black); // score
             }
           //spriteBatch.Draw(whiteRectangle , safeZoneStart,Color.Red);
             //if (isOutside == true)
