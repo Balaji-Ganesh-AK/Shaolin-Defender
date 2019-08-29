@@ -25,7 +25,7 @@ namespace Shaolin_Defender
         }
         public int checkWinState()
         {
-            if (score == 4)
+            if (score == 5)
             {
                 return 1;
             }

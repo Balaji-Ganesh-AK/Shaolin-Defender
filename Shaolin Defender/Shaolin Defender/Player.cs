@@ -37,13 +37,11 @@ namespace Shaolin_Defender
                 playerPos.X += speed;
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
-                
                 //playerPos.X = playerPos.X - 664 * (float)Math.Cos(turnAngle)*0.01f;
                 //playerPos.Y =  playerPos.Y - 502* (float)Math.Sin(turnAngle) * 0.01f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.E))
                 angle += 0.1f;
-            //
         }
         public void playerRotation(Vector2 dir)
         {
