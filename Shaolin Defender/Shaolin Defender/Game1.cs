@@ -42,8 +42,10 @@ namespace Shaolin_Defender
         Rectangle endRectangle;
        // Rectangle playerRectangle;
         Rectangle coinsRectangle;
-       // Rectangle mainFrame;
-       
+        Rectangle safeZone;
+        Rectangle winZone;
+        //delete
+        Texture2D whiteRectangle;
         List<Rectangle> fireStickRectangleList = new List<Rectangle>(5);
         //
 
@@ -73,9 +75,13 @@ namespace Shaolin_Defender
 
         //Game over & States
         bool isGameOver = false;
-        bool isEndState = false;
+        bool isCoinDone = false;
         bool isWinState = false;
+     
 
+        //test
+        bool test = false;
+        bool test_1;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -86,7 +92,8 @@ namespace Shaolin_Defender
             player.playerPos = new Vector2(264, 490);// Controls the Player.playerPosition
             mCirclePos = new Vector2(750, 500);
             startPos = new Vector2(297, 500);
-            endPos = new Vector2(1190, 500);   
+            endPos = new Vector2(1190, 500);
+            
         }
 
         /// <summary>
@@ -120,6 +127,11 @@ namespace Shaolin_Defender
             fireStickPos.Add(new Vector2(912,594));
             fireStickPos.Add(new Vector2(512,632));
 
+            //Win and safe zone 
+            safeZone = new Rectangle(1150,315 , 400,400);
+            winZone = new Rectangle(1288,300,400,600);
+
+
             base.Initialize();
         }
 
@@ -143,7 +155,10 @@ namespace Shaolin_Defender
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             backGround = this.Content.Load<Texture2D>("SpikePit2");
-                
+            //test
+            whiteRectangle = new Texture2D(GraphicsDevice,1,1);
+            whiteRectangle.SetData(new[] { Color.White});
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -165,6 +180,7 @@ namespace Shaolin_Defender
         {
             isHit = false;
             isInside = false;
+
             //make is only true after testing 
 
             // Roation rates
@@ -172,8 +188,6 @@ namespace Shaolin_Defender
             angle2 -= .012f; // type1 firewall
             angle3 += .012f; // type2 firewall
 
-            gameController.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
-            countDown = gameController.timer.ToString("0.0");
 
             circleRectangle = new Rectangle((int)(mCirclePos.X), (int)(mCirclePos.Y), mCircle.Width, mCircle.Height);
             startRectangle = new Rectangle((int)(startPos.X), (int)(startPos.Y), startPlat.Width, startPlat.Height);
@@ -192,10 +206,7 @@ namespace Shaolin_Defender
                     coinPos.RemoveAt(i);
                 }
             }
-            //// checking if the player hit the firestick 
-            //tempx = (float)(fireStick.Width * Math.Cos(angle1) + fireStickPos[1].X);
-            //tempy = (float)(fireStick.Width * Math.Sin(angle1) + fireStickPos[1].Y);
-            //fireStickRectangle = new Rectangle((int)(tempx), (int)(tempy), fireStick.Width, fireStick.Height);
+
             for (int i = 0; i < fireStickPos.Count; i++)
             {
                 //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
@@ -205,36 +216,40 @@ namespace Shaolin_Defender
                     isGameOver = true;
                 }
             }
-            if (gameController.timer <= 0) {
-                isGameOver = true;
-                isEndState = true;
+            if (gameController.timer <= 0)
+            {
+             
+               
             }
 
             //Checking if the player is outside
-            if (isInside = false && isOutside == true)
-            {
-                isGameOver = true;
-            }
-               
+
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //claming player movements
-            // Player.playerPos.X = MathHelper.Clamp(Player.playerPos.X,0, 1190-player.Width);
-            //   Player.playerPos.X = MathHelper.Clamp(0,Player.playerPos.Y, Window.ClientBounds.Height - player.Height);
+
 
             // Keymovements
-            player.playerMovement();
-            // player.playerMovementWithRotation();
+            if (isWinState == false)
+            {
+                player.playerMovement();
+                gameController.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
+                countDown = gameController.timer.ToString("0.0");
+            }
 
-           // if ((player.playerPos - mCirclePos).Length() < 350)
-           if ((player.playerPos - mCirclePos).Length() < 390)
+
+            if ((player.playerPos - mCirclePos).Length() < 420)
             {
                 isInside = true;
+                test = true;
+
+
             }
-            else
-                isInside = false;
-            
+
+            test_1 = test;
+            //Controlls player Rotation inside the circle  
+
             if (isInside == true)
             {
                 Vector2 dir = mCirclePos - player.playerPos;
@@ -249,6 +264,7 @@ namespace Shaolin_Defender
             if (isGameOver == true)
             {
                 gameController.reset();
+                test = false;
                 isGameOver = false;
                 player.playerPos = new Vector2(164, 490);
                 //remove the remaining coins and respwan them again
@@ -259,12 +275,35 @@ namespace Shaolin_Defender
                 coinPos.Add(new Vector2(968, 474));
                 coinPos.Add(new Vector2(478, 780));
             }
-            // Enters Game Over screen
-           // if ( == true)
-           // {
-//
-           // }
-          
+
+            // Game over state
+            if (test == true && isInside == false)
+            {
+                if (player.playerRectangle.Intersects(safeZone) == false)
+                {
+                    isGameOver = true;
+                }
+            }
+            //checking if all the coins are collected!!
+            if (gameController.checkWinState() == 1)
+            {
+                isCoinDone = true;
+            }
+            
+            if (isCoinDone == true && player.playerRectangle.Intersects(winZone)==true)
+            {
+
+                isWinState = true;
+                
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    isWinState = false;
+                    isGameOver = true;
+                }
+                
+            }
+            
+
             base.Update(gameTime);
         }
 
@@ -313,26 +352,23 @@ namespace Shaolin_Defender
 
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
             spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 10), Color.Black); // score
-            //spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
-            //spriteBatch.DrawString(scoreFont, "radius" + radius, new Vector2(600, 600), Color.Black);
+            spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
+            spriteBatch.DrawString(scoreFont, "radius" + player.playerRectangle.Intersects(winZone), new Vector2(600, 600), Color.Black);
             //spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(160, 400), Color.Black); // end state text
             //spriteBatch.DrawString(scoreFont, "Replay?  Type : y - or - n", new Vector2(400, 550), Color.Black);
 
-            //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.X, new Vector2(500, 500), Color.Black);
-            //spriteBatch.DrawString(scoreFont, "bar size (x , y )" + fireStickRectangle.Y, new Vector2(600, 600), Color.Black);
-            if (isInside == true)
+            if (isCoinDone == true)
             {
-                //spriteBatch.DrawString(scoreFont, "the player is inside the circle ", new Vector2(400, 400), Color.Black);
-                //spriteBatch.Draw(player, Player.playerPos, null, Color.White, angle1, new Vector2(640, 500), 1.0f, SpriteEffects.None, 0);
-               
-
+                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(640,930),Color.Black );
             }
-            else
+
+            // win state texts
+            if (isWinState == true)
             {
-                //spriteBatch.Draw(player, Player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
-
-                isOutside = true;
+                spriteBatch.DrawString(scoreFont, "You Won!! ", new Vector2(600), Color.Red);
+                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(700), Color.Red);
             }
+            spriteBatch.Draw(whiteRectangle , winZone,Color.Red);
             //if (isOutside == true)
             //{
             //    spriteBatch.DrawString(scoreFont, "Collision detected", new Vector2(500,500 ), Color.Black);

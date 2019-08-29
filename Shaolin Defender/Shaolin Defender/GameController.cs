@@ -13,7 +13,7 @@ namespace Shaolin_Defender
         public GameController()
         {
             score = 0;
-            timer = 100.00f;
+            timer = 20.00f;
         }
         public void increaseScore()
         {
@@ -25,10 +25,20 @@ namespace Shaolin_Defender
         {
             return score;
         }
+        public int checkWinState()
+        {
+            if (score == 4)
+            {
+                return 1;
+            }
+            else
+                return 0;
+
+        }
         public void reset()
         {
             score = 0;
-            timer = 100.00f;
+           
         }
     }
 }
