@@ -42,8 +42,11 @@ namespace Shaolin_Defender
         Rectangle endRectangle;
        // Rectangle playerRectangle;
         Rectangle coinsRectangle;
+
+        //safe zones
         Rectangle safeZone;
         Rectangle winZone;
+        Rectangle safeZoneStart;
         //delete
         Texture2D whiteRectangle;
         List<Rectangle> fireStickRectangleList = new List<Rectangle>(5);
@@ -77,6 +80,10 @@ namespace Shaolin_Defender
         bool isGameOver = false;
         bool isCoinDone = false;
         bool isWinState = false;
+        bool isTimerUp = false;
+
+        //pause 
+        bool isPause = false;
      
 
         //test
@@ -130,7 +137,7 @@ namespace Shaolin_Defender
             //Win and safe zone 
             safeZone = new Rectangle(1150,315 , 400,400);
             winZone = new Rectangle(1288,300,400,600);
-
+            safeZoneStart = new Rectangle(10,230, 330,400);
 
             base.Initialize();
         }
@@ -231,7 +238,7 @@ namespace Shaolin_Defender
 
 
             // Keymovements
-            if (isWinState == false)
+            if (isWinState == false && isPause == false)
             {
                 player.playerMovement();
                 gameController.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
@@ -279,30 +286,67 @@ namespace Shaolin_Defender
             // Game over state
             if (test == true && isInside == false)
             {
-                if (player.playerRectangle.Intersects(safeZone) == false)
+                if (player.playerRectangle.Intersects(safeZone) == true)
+                {
+                    player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZone.Top, 700);
+                }
+                else
                 {
                     isGameOver = true;
                 }
+                if (player.playerRectangle.Intersects(safeZoneStart) == true)
+                {
+                    //player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZone.Top, 700);
+                    player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZoneStart.Top, safeZoneStart.Bottom - 50);
+                }
+                
+
             }
             //checking if all the coins are collected!!
             if (gameController.checkWinState() == 1)
             {
                 isCoinDone = true;
             }
+        
             
             if (isCoinDone == true && player.playerRectangle.Intersects(winZone)==true)
             {
 
                 isWinState = true;
+                isCoinDone = false;
                 
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
-                    isWinState = false;
+                    gameController.resetTimer();
                     isGameOver = true;
+                    isWinState = false;
+                    isPause = false;
+                    isTimerUp = false;
+
                 }
                 
             }
-            
+            if (gameController.timer <= 0)
+            {
+                isTimerUp = true;
+                isPause = true;
+                isCoinDone = false;
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                     gameController.resetTimer();
+                     isGameOver = true;
+                    isWinState = false;
+                    isPause = false;
+                     isTimerUp = false;
+                    
+                }
+
+            }
+            if (isInside == false)
+            {
+                player.playerPos.Y = MathHelper.Clamp(player.playerPos.Y, safeZoneStart.Top, safeZoneStart.Bottom - 50);
+            }
+  
 
             base.Update(gameTime);
         }
@@ -352,8 +396,8 @@ namespace Shaolin_Defender
 
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 10), Color.Black); // timer
             spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/4", new Vector2(1180, 10), Color.Black); // score
-            spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
-            spriteBatch.DrawString(scoreFont, "radius" + player.playerRectangle.Intersects(winZone), new Vector2(600, 600), Color.Black);
+            //spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X + " " + player.playerPos.Y, new Vector2(400, 400), Color.Black);
+           // spriteBatch.DrawString(scoreFont, "radius" + player.playerRectangle.Intersects(winZone), new Vector2(600, 600), Color.Black);
             //spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(160, 400), Color.Black); // end state text
             //spriteBatch.DrawString(scoreFont, "Replay?  Type : y - or - n", new Vector2(400, 550), Color.Black);
 
@@ -361,14 +405,19 @@ namespace Shaolin_Defender
             {
                 spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(640,930),Color.Black );
             }
-
+            //mid screen popup
+            if (isTimerUp == true)
+            {
+                spriteBatch.DrawString(scoreFont, "You LOSE!! ", new Vector2(100), Color.Red);
+                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(100, 930), Color.Red);
+            }
             // win state texts
             if (isWinState == true)
             {
-                spriteBatch.DrawString(scoreFont, "You Won!! ", new Vector2(600), Color.Red);
-                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(700), Color.Red);
+                spriteBatch.DrawString(scoreFont, "You Won!! ", new Vector2(100), Color.Red);
+                spriteBatch.DrawString(scoreFont, "Press Enter to restart", new Vector2(100,930), Color.Red);
             }
-            spriteBatch.Draw(whiteRectangle , winZone,Color.Red);
+          //spriteBatch.Draw(whiteRectangle , safeZoneStart,Color.Red);
             //if (isOutside == true)
             //{
             //    spriteBatch.DrawString(scoreFont, "Collision detected", new Vector2(500,500 ), Color.Black);
