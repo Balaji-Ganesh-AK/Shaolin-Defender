@@ -386,8 +386,8 @@ namespace Shaolin_Defender
             GraphicsDevice.Clear(Color.OrangeRed);
 
             // TODO: Add your drawing code here
-
-            spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation((graphics.PreferredBackBufferWidth/10 -player.playerPos.X), (0/*graphics.PreferredBackBufferHeight/2- player.playerPos.Y*/), 0));
+                //this controls the camera
+            spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation((graphics.PreferredBackBufferWidth/10 -player.playerPos.X), (graphics.PreferredBackBufferHeight/2- player.playerPos.Y), 0));
 
             Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
 
@@ -407,7 +407,7 @@ namespace Shaolin_Defender
             //cirlce 2 
             spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1, originCircle_2, 2.9f, SpriteEffects.None, 0);
             //cirlce 3 
-            spriteBatch.Draw(mCircle_3, mCirclePos_3, null, Color.White, angle1 * -1, originCircle_2, 2.9f, SpriteEffects.None, 0);
+            spriteBatch.Draw(mCircle_3, mCirclePos_3, null, Color.White, angle1 , originCircle_2, 2.9f, SpriteEffects.None, 0);
             //player
             spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 0);
 
