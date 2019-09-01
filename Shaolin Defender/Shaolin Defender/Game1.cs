@@ -26,15 +26,18 @@ namespace Shaolin_Defender
         Texture2D bgPlat; // non moving platform
         Texture2D mCircle; // circle (main platform)
         Texture2D mCircle_2; // circle(2nd platform)
-        Texture2D mCircle_3;// cirlce (3rd platform)
+        Texture2D mCircle_3; // cirlce (3rd platform)
         Texture2D playerTexture;
         Texture2D coins;
         Texture2D fireStick;
         Texture2D blur;
 
         // Vectors
-        Vector2 backgroundPos;
-        Vector2 backgroundPos2;
+        Vector2 backgroundPos1, backgroundPos2, backgroundPos3, 
+            backgroundPos4, backgroundPos5, backgroundPos6, 
+            backgroundPos7, backgroundPos8, backgroundPos9,
+            backgroundPos10, backgroundPos11, backgroundPos12,
+            backgroundPos13, backgroundPos14, backgroundPos15;
         Vector2 bgPlatPos;
         Vector2 mCirclePos;
         Vector2 mCirclePos_2;
@@ -99,8 +102,22 @@ namespace Shaolin_Defender
             Content.RootDirectory = "Content";
 
             // Object positions (x, y)
-            backgroundPos = new Vector2(0, 0);
-            backgroundPos2 = new Vector2(1023, 0);
+            backgroundPos1 = new Vector2(-1024, 1024);
+            backgroundPos2 = new Vector2(-1024, 0);
+            backgroundPos3 = new Vector2(-1024, -1024);
+            backgroundPos4 = new Vector2(0, -1024);
+            backgroundPos5 = new Vector2(0, 0);
+            backgroundPos6 = new Vector2(0, 1024);
+            backgroundPos7 = new Vector2(1024, 1024);
+            backgroundPos8 = new Vector2(1024, 0);
+            backgroundPos9 = new Vector2(1024, -1024);
+            backgroundPos10 = new Vector2(2048, 1024);
+            backgroundPos11 = new Vector2(2048, 0);
+            backgroundPos12 = new Vector2(2048, -1024);
+            backgroundPos13 = new Vector2(3072, 1024);
+            backgroundPos14 = new Vector2(3072, 0);
+            backgroundPos15 = new Vector2(3072, -1024);
+
             bgPlatPos = new Vector2(255, 160);
             player.playerPos = new Vector2(154, 465); // Controls the Player.playerPosition
             mCirclePos = new Vector2(750, 500);
@@ -125,7 +142,7 @@ namespace Shaolin_Defender
             graphics.PreferredBackBufferWidth = 1500;
             graphics.PreferredBackBufferHeight = 1010;
                 
-            graphics.IsFullScreen = false;           
+            graphics.IsFullScreen = true;           
             graphics.ApplyChanges();
 
             // Coin locations & Adding
@@ -157,7 +174,6 @@ namespace Shaolin_Defender
             safeZoneStart = new Rectangle(10, 230, 330, 400);
             safeZoneCirlce1To2 = new Rectangle(1120,315,100,400);
             
-
             base.Initialize();
         }
 
@@ -179,7 +195,7 @@ namespace Shaolin_Defender
             scoreFont = Content.Load<SpriteFont>("Title");
             gameOverFont = Content.Load<SpriteFont>("GameOver");
             //playerTexture = this.Content.Load<Texture2D>("Cowboy_man");
-            playerTexture = this.Content.Load<Texture2D>("Coin");
+            playerTexture = this.Content.Load<Texture2D>("CowBoyFrame");
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             blur = this.Content.Load<Texture2D>("blur");
@@ -264,7 +280,7 @@ namespace Shaolin_Defender
                 countDown = gameController.timer.ToString("0.0");
             }
 
-            if ((player.playerPos - mCirclePos).Length() < 420 || (player.playerPos - mCirclePos_2).Length() <420 || (player.playerPos - mCirclePos_3).Length() < 420)
+            if ((player.playerPos - mCirclePos).Length() < 420 || (player.playerPos - mCirclePos_2).Length() < 420 || (player.playerPos - mCirclePos_3).Length() < 420)
             {
                 isInside = true;
                 test = true;
@@ -277,7 +293,7 @@ namespace Shaolin_Defender
             {
                 Vector2 dir = new Vector2();
               
-                //get the circle
+                // get the circle
                 if ((player.playerPos - mCirclePos).Length() < 420)
                 {
                     dir = mCirclePos - player.playerPos ;
@@ -290,7 +306,6 @@ namespace Shaolin_Defender
                 if ((player.playerPos - mCirclePos_3).Length() < 420)
                 {
                     dir = mCirclePos_3 - player.playerPos;
-                    
                 }
 
                 player.playerRotation(dir);
@@ -400,8 +415,11 @@ namespace Shaolin_Defender
             GraphicsDevice.Clear(Color.OrangeRed);
 
             // TODO: Add your drawing code here
-                //this controls the camera
-            spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation((graphics.PreferredBackBufferWidth/10 -player.playerPos.X), (graphics.PreferredBackBufferHeight/2- player.playerPos.Y), 0));
+
+            // This controls the camera
+            spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation(
+                (graphics.PreferredBackBufferWidth/10 -player.playerPos.X),
+                (graphics.PreferredBackBufferHeight/2- player.playerPos.Y), 0));
 
             Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
 
@@ -413,8 +431,24 @@ namespace Shaolin_Defender
             //Vector2 originForPeople = new Vector2();
             Vector2 fireStickOrigin = new Vector2(fireStick.Width / 2, fireStick.Height / 2);
             Vector2 coinOrigin = new Vector2(coins.Width / 2, coins.Height / 2);
-            spriteBatch.Draw(background, backgroundPos, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+
+            // Spikes
+            spriteBatch.Draw(background, backgroundPos1, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
             spriteBatch.Draw(background, backgroundPos2, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos3, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos4, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos5, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos6, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos7, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos8, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos9, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos10, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos11, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos12, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos13, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos14, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos15, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+
             spriteBatch.Draw(bgPlat, bgPlatPos, null, Color.White, 0, originCircle, 1.71f, SpriteEffects.None, 0);
             //cirlce 1
             spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originCircle, 2.9f, SpriteEffects.None, 0);
