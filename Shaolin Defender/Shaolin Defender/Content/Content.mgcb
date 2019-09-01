@@ -116,6 +116,18 @@
 /processorParam:TextureFormat=Color
 /build:Platform1.png
 
+#begin Purple Planet Music_Manhunt.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Purple Planet Music_Manhunt.mp3
+
+#begin Rising Tide.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Rising Tide.mp3;Rising_Tide.mp3
+
 #begin SpikePit.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
+
+// Music by Kevin MacLeod: https://incompetech.filmmusic.io/song/5027-rising-tide/
+
 namespace Shaolin_Defender
 {
     /// <summary>
@@ -12,6 +16,7 @@ namespace Shaolin_Defender
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Song backgroundMusic;
         GameController gameController = new GameController();
         Player player = new Player();
         int i = 0;
@@ -31,23 +36,20 @@ namespace Shaolin_Defender
         Vector2 bgPlatPos;
         Vector2 mCirclePos;
         Vector2 blurPos;
-        List<Vector2> coinPos = new List<Vector2>(5); // list to store the location of the coins
-        List<Vector2> fireStickPos = new List<Vector2>(5);//list to store the fire stick locations
+        List<Vector2> coinPos = new List<Vector2>(5); // List to store the location of the coins
+        List<Vector2> fireStickPos = new List<Vector2>(12); // List to store the fire stick locations
 
         // Collision
         Rectangle circleRectangle;
-        //Rectangle startRectangle;
-        //Rectangle endRectangle;
         Rectangle coinsRectangle;
 
-        //safe zones
+        // Safe zones
         Rectangle safeZone;
         Rectangle winZone;
         Rectangle safeZoneStart;
         //delete
         Texture2D whiteRectangle;
         List<Rectangle> fireStickRectangleList = new List<Rectangle>(5);
-        //
 
         // Fonts
         private SpriteFont scoreFont;
@@ -58,8 +60,8 @@ namespace Shaolin_Defender
         // Gets width and height of the window
         private int widthWindow;
         private int heigthWindow;
-        //radius
-
+        
+        // Radius
         float radius;
 
         // MovementControls
@@ -73,15 +75,14 @@ namespace Shaolin_Defender
         bool isOutside = false;
         bool isHit;
 
-        //Game over & States
+        // GameOver & States
         bool isGameOver = false;
         bool isCoinDone = false;
         bool isWinState = false;
         bool isTimerUp = false;
 
-        //pause 
+        // Pause 
         bool isPause = false;
-     
 
         //test
         bool test = false;
@@ -120,19 +121,28 @@ namespace Shaolin_Defender
             graphics.IsFullScreen = false;           
             graphics.ApplyChanges();
 
-            // Coin locations
+            // Coin locations & Adding
             coinPos.Add(new Vector2(554, 252));
             coinPos.Add(new Vector2(798, 184));
             coinPos.Add(new Vector2(1068, 474));
             coinPos.Add(new Vector2(578, 780));
             coinPos.Add(new Vector2(800, 500));
 
-            // Fire Locations
-            fireStickPos.Add(new Vector2(518, 366));
+            // Fire Locations & Adding
+            fireStickPos.Add(new Vector2(558, 500));
+            fireStickPos.Add(new Vector2(470, 260));
             fireStickPos.Add(new Vector2(830, 304));
-            fireStickPos.Add(new Vector2(912, 594));
+            fireStickPos.Add(new Vector2(800, 370));
+            fireStickPos.Add(new Vector2(770, 440));
             fireStickPos.Add(new Vector2(412, 632));
+            fireStickPos.Add(new Vector2(652, 200));
+            fireStickPos.Add(new Vector2(672, 700));
+            fireStickPos.Add(new Vector2(752, 700));
+            fireStickPos.Add(new Vector2(832, 700));
             fireStickPos.Add(new Vector2(740, 510));
+            fireStickPos.Add(new Vector2(940, 480));
+            fireStickPos.Add(new Vector2(1070, 370));
+            fireStickPos.Add(new Vector2(1070, 610));
 
             // Win and safe zone 
             safeZone = new Rectangle(1150, 315, 400, 400);
@@ -162,6 +172,10 @@ namespace Shaolin_Defender
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             blur = this.Content.Load<Texture2D>("blur");
+
+            // Background Music
+            backgroundMusic = Content.Load<Song>("Rising_Tide");
+            MediaPlayer.Play(backgroundMusic);
             //test
             whiteRectangle = new Texture2D(GraphicsDevice,1,1);
             whiteRectangle.SetData(new[] { Color.White});
