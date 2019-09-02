@@ -460,7 +460,6 @@ namespace Shaolin_Defender
             //player
             spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 0);
 
-
             spriteBatch.DrawString(scoreFont, "Pos: " + player.playerPos.X + "," + player.playerPos.Y, new Vector2(500, 450), Color.LightYellow); // score
             //debug print
             //spriteBatch.Draw(whiteRectangle,safeZoneCirlce1To2,Color.Red);
@@ -483,8 +482,8 @@ namespace Shaolin_Defender
             }
 
             // Score & Timer
-            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.LightYellow); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(880, 750), Color.LightYellow); // score
+            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 500, player.playerPos.Y + 380), Color.LightYellow); // timer
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 700, player.playerPos.Y + 380), Color.LightYellow); // score
 
             // All coins collected text
             if (isCoinDone == true)
