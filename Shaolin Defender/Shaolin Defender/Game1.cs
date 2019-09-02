@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+
 
 // Music by Kevin MacLeod: https://incompetech.filmmusic.io/song/5027-rising-tide/
 
@@ -17,7 +19,9 @@ namespace Shaolin_Defender
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Song backgroundMusic;
+        List<SoundEffect> soundEffects = new List<SoundEffect>();
         GameController gameController = new GameController();
+        
         Player player = new Player();
         int i = 0;
 
@@ -199,21 +203,31 @@ namespace Shaolin_Defender
             mCircle = this.Content.Load<Texture2D>("Platform1");
             mCircle_2 = this.Content.Load< Texture2D>("Platform1");
             mCircle_3 = this.Content.Load<Texture2D>("Platform1");
-            scoreFont = Content.Load<SpriteFont>("Title");
-            gameOverFont = Content.Load<SpriteFont>("GameOver");
+           
             //playerTexture = this.Content.Load<Texture2D>("Cowboy_man");
             playerTexture = this.Content.Load<Texture2D>("CowBoyFrame");
             coins = this.Content.Load<Texture2D>("coin_1");
             fireStick = this.Content.Load<Texture2D>("fireball");
             blur = this.Content.Load<Texture2D>("blur");
-            
+
+            scoreFont = Content.Load<SpriteFont>("Title");
+            gameOverFont = Content.Load<SpriteFont>("GameOver");
+
             // Background Music
-            backgroundMusic = Content.Load<Song>("Rising_Tide");
+            backgroundMusic = Content.Load<Song>("new/castle_music");
             MediaPlayer.Play(backgroundMusic);
             //test
             whiteRectangle = new Texture2D(GraphicsDevice,1,1);
             whiteRectangle.SetData(new[] { Color.White});
 
+            //soundEffects.Add(Content.Load<SoundEffect>("new/splosh"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/coin_01"));
+            //soundEffects.Add(Content.Load<SoundEffect>("new/coin_02"));
+            //sploshMusic = Content.Load<Song>("new/walking");
+
+            var instance = soundEffects[0].CreateInstance();
+            instance.IsLooped = true;
+           // instance.Play();
             // TODO: use this.Content to load your game content here
         }
 
@@ -252,6 +266,8 @@ namespace Shaolin_Defender
 
                 if (player.playerRectangle.Intersects(coinsRectangle))
                 {
+                   
+                    soundEffects[0].CreateInstance().Play();
                     isHit = true;
                     gameController.increaseScore();
                     coinPos.RemoveAt(i);
@@ -270,8 +286,7 @@ namespace Shaolin_Defender
                 if (isChange == false)
                 {
                     fireStickPos[i] = new Vector2(fireStickPos[i].X, fireStickPos[i].Y + 1f);
-                    
-
+                
                 }
                 else
                 {
@@ -280,6 +295,7 @@ namespace Shaolin_Defender
 
                 if ((fireStickPos[i] - player.playerPos).Length() < 65)
                 {
+                    
                     isGameOver = true;
                 }
                 
@@ -500,37 +516,37 @@ namespace Shaolin_Defender
             }
 
             // Score & Timer
-            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 500, player.playerPos.Y + 380), Color.LightYellow); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 700, player.playerPos.Y + 380), Color.LightYellow); // score
+            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.LightYellow); // timer
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.LightYellow); // score
 
             // All coins collected text
             if (isCoinDone == true)
             {
-                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(430, 20), Color.Orange);
+                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(player.playerPos.X, player.playerPos.Y - 470), Color.Orange);
             }
 
             // GameOver State
             if (isTimerUp == true)
             {
-                spriteBatch.Draw(blur, blurPos, null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(160, 400), Color.Black); // end state text
-                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(350, 550), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(570, 550), Color.DarkRed);
-                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(770, 550), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.Black); // timer
-                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(1180, 950), Color.Black); // score
+                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 550, player.playerPos.Y - 520), null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(player.playerPos.X - 100, player.playerPos.Y - 100), Color.Black); // end state text
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 235, player.playerPos.Y + 50), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 440, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.Black); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.Black); // score
             }
 
             // Win State
             if (isWinState == true)
             {
-                spriteBatch.Draw(blur, blurPos, null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 1);
-                spriteBatch.DrawString(gameOverFont, "YOU WON!!", new Vector2(230, 400), Color.DarkOliveGreen);
-                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(350, 550), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(570, 550), Color.DarkRed);
-                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(770,550), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.Black); // timer
-                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(1180, 950), Color.Black); // score
+                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 550, player.playerPos.Y - 520), null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(gameOverFont, "YOU WON!!", new Vector2(player.playerPos.X - 100, player.playerPos.Y - 100), Color.DarkOliveGreen);
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 235, player.playerPos.Y + 50), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 440, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.Black); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.Black); // score
             }
             
             spriteBatch.End();
