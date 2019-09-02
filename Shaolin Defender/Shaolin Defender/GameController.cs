@@ -13,7 +13,7 @@ namespace Shaolin_Defender
         public GameController()
         {
             score = 0;
-            timer = 40.00f;
+            timer = 100.00f;
         }
         public void increaseScore()
         {
@@ -40,5 +40,6 @@ namespace Shaolin_Defender
         {
             timer = 40.00f;
         }
+        
     }
 }
