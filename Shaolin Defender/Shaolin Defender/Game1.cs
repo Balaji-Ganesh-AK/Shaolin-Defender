@@ -122,7 +122,7 @@ namespace Shaolin_Defender
             player.playerPos = new Vector2(154, 465); // Controls the Player.playerPosition
             mCirclePos = new Vector2(750, 500);
             mCirclePos_2 = new Vector2(1600,500);
-            mCirclePos_3 = new Vector2(2040,900);
+            mCirclePos_3 = new Vector2(2400,500);
             blurPos = new Vector2(0, 0);
         }
 
@@ -388,6 +388,7 @@ namespace Shaolin_Defender
                 isTimerUp = true;
                 isPause = true;
                 isCoinDone = false;
+                player.playerPos = new Vector2(154, 465);
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                      gameController.resetTimer();
@@ -418,8 +419,8 @@ namespace Shaolin_Defender
 
             // This controls the camera
             spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation(
-                (graphics.PreferredBackBufferWidth/10 -player.playerPos.X),
-                (graphics.PreferredBackBufferHeight/2- player.playerPos.Y), 0));
+                (graphics.PreferredBackBufferWidth/10 - player.playerPos.X + 400),
+                (graphics.PreferredBackBufferHeight/2 - player.playerPos.Y - 50), 0));
 
             Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
 
@@ -453,12 +454,14 @@ namespace Shaolin_Defender
             //cirlce 1
             spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originCircle, 2.9f, SpriteEffects.None, 0);
             //cirlce 2 
-            spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1, originCircle_2, 2.9f, SpriteEffects.None, 0);
+            spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1.5f, originCircle_2, 2.9f, SpriteEffects.None, 1);
             //cirlce 3 
-            spriteBatch.Draw(mCircle_3, mCirclePos_3, null, Color.White, angle1 , originCircle_2, 2.9f, SpriteEffects.None, 0);
+            spriteBatch.Draw(mCircle_3, mCirclePos_3, null, Color.White, angle1*.5f, originCircle_2, 2.9f, SpriteEffects.None, 0);
             //player
             spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 0);
 
+
+            spriteBatch.DrawString(scoreFont, "Pos: " + player.playerPos.X + "," + player.playerPos.Y, new Vector2(500, 450), Color.LightYellow); // score
             //debug print
             //spriteBatch.Draw(whiteRectangle,safeZoneCirlce1To2,Color.Red);
             //if (isInside ==true)
@@ -481,7 +484,7 @@ namespace Shaolin_Defender
 
             // Score & Timer
             spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.LightYellow); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(1180, 950), Color.LightYellow); // score
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(880, 750), Color.LightYellow); // score
 
             // All coins collected text
             if (isCoinDone == true)
@@ -500,6 +503,7 @@ namespace Shaolin_Defender
                 spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(35, 950), Color.Black); // timer
                 spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(1180, 950), Color.Black); // score
             }
+
             // Win State
             if (isWinState == true)
             {

@@ -29,12 +29,13 @@ namespace Shaolin_Defender
             //}
             if (Keyboard.GetState().IsKeyDown(Keys.S))//&& Player.playerPos.Y < 390)
                 playerPos.Y += speed;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) //&& Player.playerPos.X>0+player.Width/2)
-              playerPos.X -= speed;
-          
+                
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && playerPos.X > 153) //&& Player.playerPos.X>0+player.Width/2)
+                playerPos.X -= speed;
+            // ATTENTION: Need to find end screen position to prevent player from going off of it
             if (Keyboard.GetState().IsKeyDown(Keys.D))// && Player.playerPos.X < 390)
                 playerPos.X += speed;
+
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
                 //playerPos.X = playerPos.X - 664 * (float)Math.Cos(turnAngle)*0.01f;
