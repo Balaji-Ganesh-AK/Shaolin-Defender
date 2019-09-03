@@ -19,7 +19,7 @@ namespace Shaolin_Defender
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Song backgroundMusic;
-        List<SoundEffect> soundEffects = new List<SoundEffect>();
+        List<SoundEffect> soundEffects = new List<SoundEffect>(7);
         GameController gameController = new GameController();
         
         Player player = new Player();
@@ -120,7 +120,7 @@ namespace Shaolin_Defender
           //  backgroundPos6 = new Vector2(-450, 1624);
            
             startPlatPos = new Vector2(10, 220);
-            endPlatPos = new Vector2(3150,310);
+            endPlatPos = new Vector2(3150,620);
             player.playerPos = new Vector2(54, 390); // Controls the Player.playerPosition
             mCirclePos = new Vector2(700, 450);
             mCirclePos_2 = new Vector2(1450,800);
@@ -220,10 +220,15 @@ namespace Shaolin_Defender
             //test
             whiteRectangle = new Texture2D(GraphicsDevice,1,1);
             whiteRectangle.SetData(new[] { Color.White});
-
-            //soundEffects.Add(Content.Load<SoundEffect>("new/splosh"));
+            
             soundEffects.Add(Content.Load<SoundEffect>("new/coin_01"));
-            //soundEffects.Add(Content.Load<SoundEffect>("new/coin_02"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/coin_02"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/splosh"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/fire_crackle"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/Gear_Sounds"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/hit_fire"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/Walking_on_Concrete"));
+
             //sploshMusic = Content.Load<Song>("new/walking");
 
             var instance = soundEffects[0].CreateInstance();
@@ -267,8 +272,18 @@ namespace Shaolin_Defender
 
                 if (player.playerRectangle.Intersects(coinsRectangle))
                 {
-                   
-                    soundEffects[0].CreateInstance().Play();
+                    Random rnd = new Random();
+                    int r = rnd.Next(1, 4);
+                    if (r == 1 || r == 3)
+                    {
+                        SoundEffect.MasterVolume = .4f;
+                        soundEffects[0].CreateInstance().Play();
+                    }
+                    else if (r == 2 || r == 4)
+                    {
+                        SoundEffect.MasterVolume = .4f;
+                        soundEffects[1].CreateInstance().Play();
+                    }
                     isHit = true;
                     gameController.increaseScore();
                     coinPos.RemoveAt(i);

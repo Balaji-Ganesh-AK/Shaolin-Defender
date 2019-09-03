@@ -134,23 +134,35 @@
 /processorParam:Quality=Best
 /build:new/castle_music.mp3
 
-#begin new/coin_01.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:new/coin_01.mp3
-
 #begin new/coin_01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:new/coin_01.wav
 
-#begin new/coin_02.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin new/coin_02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:new/coin_02.mp3
+/build:new/coin_02.wav
+
+#begin new/fire_crackle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/fire_crackle.wav
+
+#begin new/Gear_Sounds.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/Gear_Sounds.wav
+
+#begin new/hit_fire.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/hit_fire.wav
 
 #begin new/NewPlatform1.png
 /importer:TextureImporter
@@ -187,6 +199,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:new/playerRunLeft.png
+
+#begin new/splosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/splosh.wav
+
+#begin new/Walking_on_Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/Walking_on_Concrete.wav
 
 #begin Newbackground.png
 /importer:TextureImporter
@@ -235,18 +259,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:platform3.png
-
-#begin Purple Planet Music_Manhunt.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Purple Planet Music_Manhunt.mp3
-
-#begin Rising Tide.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Rising Tide.mp3;Rising_Tide.mp3
 
 #begin SpikePit.png
 /importer:TextureImporter
