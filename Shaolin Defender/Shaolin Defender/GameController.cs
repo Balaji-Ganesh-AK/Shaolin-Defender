@@ -21,10 +21,10 @@ namespace Shaolin_Defender
         {
             score++;
         }
-        public int checkWinState()
+        public int checkWinState(int check)
         {
            
-            if (score == 11)
+            if (check == 0)
             {
                 return 1;
             }

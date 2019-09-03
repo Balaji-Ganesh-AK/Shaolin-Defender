@@ -21,7 +21,11 @@ namespace Shaolin_Defender
         private Song backgroundMusic;
         List<SoundEffect> soundEffects = new List<SoundEffect>(4);
         GameController gameController = new GameController();
-        
+        //Coin Parent
+        Coins newCoin = new Coins();
+        //Fire  Ball 
+        FireBall newFireBall = new FireBall();
+        //Player Object
         Player player = new Player();
 
        // Animation myPlayerAnimation;
@@ -57,9 +61,8 @@ namespace Shaolin_Defender
         public Vector2 mCirclePos_2;
         public Vector2 mCirclePos_3;
         Vector2 blurPos;
-        public List<Vector2> coinPos = new List<Vector2>(); // List to store the location of the coins
-        List<Vector2> fireStickPos = new List<Vector2>(); // List to store the fire stick locations
-        List<Vector2> fireStickPosMoving = new List<Vector2>();// moving fire ball
+        
+        
         //get the circle
         Vector2 dir = new Vector2();
         // Collision
@@ -165,60 +168,10 @@ namespace Shaolin_Defender
             graphics.ApplyChanges();
 
             // Coin locations & Adding
-            coinPos.Add(new Vector2(554, 252));
-            coinPos.Add(new Vector2(798, 184));
-            coinPos.Add(new Vector2(1068, 474));
-            coinPos.Add(new Vector2(578, 780));
-            coinPos.Add(new Vector2(800, 500));
-            coinPos.Add(new Vector2(1300, 580));
-            coinPos.Add(new Vector2(1455, 800));
-            coinPos.Add(new Vector2(1600, 550));
-            coinPos.Add(new Vector2(2350, 730));
-            coinPos.Add(new Vector2(2350, 350));
-            coinPos.Add(new Vector2(2350, 1150));
+            newCoin.addCoins();
 
             // Fire Locations & Adding
-            fireStickPos.Add(new Vector2(558, 500));
-            fireStickPos.Add(new Vector2(470, 700));
-            fireStickPos.Add(new Vector2(900, 600));
-            fireStickPos.Add(new Vector2(800, 370));
-            fireStickPos.Add(new Vector2(670, 200));
-            fireStickPos.Add(new Vector2(1455, 920));
-            fireStickPos.Add(new Vector2(1455, 660));
-            //fireStickPos.Add(new Vector2(672, 700));
-            //fireStickPos.Add(new Vector2(752, 700));
-            fireStickPos.Add(new Vector2(2780, 1000));
-            fireStickPos.Add(new Vector2(2700, 1000));
-            fireStickPos.Add(new Vector2(2630, 1000));
-            //fireStickPos.Add(new Vector2(2520, 1000));
-            fireStickPos.Add(new Vector2(2460, 1000));
-            fireStickPos.Add(new Vector2(2400, 1000));
-            fireStickPos.Add(new Vector2(2320, 1000));
-            fireStickPos.Add(new Vector2(2260, 1000));
-            //fireStickPos.Add(new Vector2(2160, 1000));
-            fireStickPos.Add(new Vector2(2080, 1000));
-            fireStickPos.Add(new Vector2(2080, 1000));
-            fireStickPos.Add(new Vector2(2000, 1000));
-            fireStickPos.Add(new Vector2(1920, 1000));
-
-            //fireStickPos.Add(new Vector2(752, 700));
-            fireStickPos.Add(new Vector2(2780, 500));
-            fireStickPos.Add(new Vector2(2700, 500));
-            fireStickPos.Add(new Vector2(2630, 500));
-            //fireStickPos.Add(new Vector2(2520, 1000));
-            fireStickPos.Add(new Vector2(2460, 500));
-            fireStickPos.Add(new Vector2(2400, 500));
-            fireStickPos.Add(new Vector2(2320, 500));
-            fireStickPos.Add(new Vector2(2260, 500));
-            //fireStickPos.Add(new Vector2(2160, 1000));
-            fireStickPos.Add(new Vector2(2080, 500));
-            fireStickPos.Add(new Vector2(2080, 500));
-            fireStickPos.Add(new Vector2(2000, 500));
-            fireStickPos.Add(new Vector2(1920, 500));
-            //moving fire ball
-            fireStickPosMoving.Add(new Vector2(1300, 900));
-            fireStickPosMoving.Add(new Vector2(1600, 600));
-            fireStickPosMoving.Add(new Vector2(2350, 975));
+            newFireBall.addFireBall();
 
             // Win and safe zone 
             safeZone = new Rectangle(2860, 565, 600, 400);
@@ -335,9 +288,9 @@ namespace Shaolin_Defender
             //Coin Animation
             coinAnimation.Play(gameTime);
             //Checking if the player hit the coins
-            for (int i = 0; i < coinPos.Count; i++)
+            for (int i = 0; i < newCoin.coinPos.Count; i++)
             {
-                coinsRectangle = new Rectangle((int)(coinPos[i].X) - 30, (int)(coinPos[i].Y - 30), coins.Width / 12, coins.Height / 2);
+                coinsRectangle = new Rectangle((int)(newCoin.coinPos[i].X) - 30, (int)(newCoin.coinPos[i].Y - 30), coins.Width / 12, coins.Height / 2);
 
                 if (player.playerRectangle.Intersects(coinsRectangle))
                 {
@@ -355,7 +308,7 @@ namespace Shaolin_Defender
                     }
                     isHit = true;
                     gameController.increaseScore();
-                    coinPos.RemoveAt(i);
+                    newCoin.coinPos.RemoveAt(i);
                 }
             }
             // *********************************FireBall  movement Controller***********************************************  
@@ -363,16 +316,10 @@ namespace Shaolin_Defender
                 isChange = true;
             else
                 isChange = false;
-            for (int i = 0; i < fireStickPos.Count; i++)
+            for (int i = 0; i < newFireBall.fireStickPos.Count; i++)
             {
 
-                //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
-                ////fireStickRectangle = new Rectangle();
-
-               
-
-
-                if ((fireStickPos[i] - player.playerPos).Length() < 65)
+                if ((newFireBall.fireStickPos[i] - player.playerPos).Length() < 65)
                 {
                     SoundEffect.MasterVolume = .25f;
                     soundEffects[3].CreateInstance().Play();
@@ -408,9 +355,7 @@ namespace Shaolin_Defender
             }
             else
                 myPlayerAnimation.Play(gameTime);
-                
-
-
+          
             // Controlls player Rotation inside the circle  
             if (isInside == true)
             {
@@ -435,24 +380,20 @@ namespace Shaolin_Defender
                 player.playerRotation(dir);
             }
 
-            //if (player.playerRectangle.Intersects(safeZone) == true)
-            //{
-            //    isWinState = false;
-            //}
+          
 
-            for (int i = 0; i < fireStickPosMoving.Count; i++)
+            for (int i = 0; i < newFireBall.fireStickPosMoving.Count; i++)
             {
-                //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
-                ////fireStickRectangle = new Rectangle();
+               
                 if (i % 2 == 0)
                 {
                    if (isChange == false /*&& (fireStickPosMoving[i]- dir).Length()<420*/)
                    {
-                       fireStickPosMoving[i] = new Vector2(fireStickPosMoving[i].X, fireStickPosMoving[i].Y - speed);
+                        newFireBall.fireStickPosMoving[i] = new Vector2(newFireBall.fireStickPosMoving[i].X, newFireBall.fireStickPosMoving[i].Y - speed);
                    }
                    else
                    {
-                       fireStickPosMoving[i] = new Vector2(fireStickPosMoving[i].X, fireStickPosMoving[i].Y + speed);
+                        newFireBall.fireStickPosMoving[i] = new Vector2(newFireBall.fireStickPosMoving[i].X, newFireBall.fireStickPosMoving[i].Y + speed);
                    }
                     
                 }
@@ -460,28 +401,22 @@ namespace Shaolin_Defender
                 {
                     if (isChange == false /*&& (fireStickPosMoving[i] - dir).Length() < 420*/)
                     {
-                        fireStickPosMoving[i] = new Vector2(fireStickPosMoving[i].X, fireStickPosMoving[i].Y + speed);
+                        newFireBall.fireStickPosMoving[i] = new Vector2(newFireBall.fireStickPosMoving[i].X, newFireBall.fireStickPosMoving[i].Y + speed);
                     }
                     else
                     {
-                        fireStickPosMoving[i] = new Vector2(fireStickPosMoving[i].X, fireStickPosMoving[i].Y - speed);
+                        newFireBall.fireStickPosMoving[i] = new Vector2(newFireBall.fireStickPosMoving[i].X, newFireBall.fireStickPosMoving[i].Y - speed);
                     }
 
                 }
 
-                if ((fireStickPosMoving[i] - player.playerPos).Length() < 65)
+                if ((newFireBall.fireStickPosMoving[i] - player.playerPos).Length() < 65)
                 {
                     isGameOver = true;
                 }
 
             }
-            // Fireball vertical movement
-            //fireStickPos. += speed;
-            //fireStickPos[1].Y += 
-
-            //angle += 1f;
-
-
+           
             // Resets the game!
             if (isGameOver == true)
             {
@@ -492,65 +427,15 @@ namespace Shaolin_Defender
 
                 speed = 0;
                 // Remove the remaining coins and respwan them again
-                coinPos.Clear();
+                newCoin.coinPos.Clear();
 
                 // Re-add all the coins
-                coinPos.Add(new Vector2(554, 252));
-                coinPos.Add(new Vector2(798, 184));
-                coinPos.Add(new Vector2(1068, 474));
-                coinPos.Add(new Vector2(578, 780));
-                coinPos.Add(new Vector2(800, 500));
-                coinPos.Add(new Vector2(1300, 580));
-                coinPos.Add(new Vector2(1455, 800));
-                coinPos.Add(new Vector2(1600, 550));
-                coinPos.Add(new Vector2(2350, 730));
-                coinPos.Add(new Vector2(2350, 350));
-                coinPos.Add(new Vector2(2350, 1150));
+                newCoin.addCoins();
 
-                fireStickPos.Clear();
+                newFireBall.fireStickPos.Clear();
+                newFireBall.fireStickPosMoving.Clear();
                 // Fire Locations & Adding
-                fireStickPos.Add(new Vector2(558, 500));
-                fireStickPos.Add(new Vector2(470, 700));
-                fireStickPos.Add(new Vector2(900, 600));
-                fireStickPos.Add(new Vector2(800, 370));
-                fireStickPos.Add(new Vector2(670, 200));
-                fireStickPos.Add(new Vector2(1455, 920));
-                fireStickPos.Add(new Vector2(1455, 660));
-                //fireStickPos.Add(new Vector2(672, 700));
-                //fireStickPos.Add(new Vector2(752, 700));
-                fireStickPos.Add(new Vector2(2780, 1000));
-                fireStickPos.Add(new Vector2(2700, 1000));
-                fireStickPos.Add(new Vector2(2630, 1000));
-                //fireStickPos.Add(new Vector2(2520, 1000));
-                fireStickPos.Add(new Vector2(2460, 1000));
-                fireStickPos.Add(new Vector2(2400, 1000));
-                fireStickPos.Add(new Vector2(2320, 1000));
-                fireStickPos.Add(new Vector2(2260, 1000));
-                //fireStickPos.Add(new Vector2(2160, 1000));
-                fireStickPos.Add(new Vector2(2080, 1000));
-                fireStickPos.Add(new Vector2(2080, 1000));
-                fireStickPos.Add(new Vector2(2000, 1000));
-                fireStickPos.Add(new Vector2(1920, 1000));
-
-                //fireStickPos.Add(new Vector2(752, 700));
-                fireStickPos.Add(new Vector2(2780, 500));
-                fireStickPos.Add(new Vector2(2700, 500));
-                fireStickPos.Add(new Vector2(2630, 500));
-                //fireStickPos.Add(new Vector2(2520, 1000));
-                fireStickPos.Add(new Vector2(2460, 500));
-                fireStickPos.Add(new Vector2(2400, 500));
-                fireStickPos.Add(new Vector2(2320, 500));
-                fireStickPos.Add(new Vector2(2260, 500));
-                //fireStickPos.Add(new Vector2(2160, 1000));
-                fireStickPos.Add(new Vector2(2080, 500));
-                fireStickPos.Add(new Vector2(2080, 500));
-                fireStickPos.Add(new Vector2(2000, 500));
-                fireStickPos.Add(new Vector2(1920, 500));
-                //moving fire ball
-                fireStickPosMoving.Clear();
-                fireStickPosMoving.Add(new Vector2(1300, 900));
-                fireStickPosMoving.Add(new Vector2(1600, 600));
-                fireStickPosMoving.Add(new Vector2(2350, 975));
+                newFireBall.addFireBall();
             }
 
             //// Game over state
@@ -569,7 +454,7 @@ namespace Shaolin_Defender
 
 
             // Checking if all the coins are collected!!
-            if (gameController.checkWinState() == 1)
+            if (gameController.checkWinState(newCoin.coinPos.Count) == 1)
             {
                 isCoinDone = true;
             }
@@ -598,7 +483,7 @@ namespace Shaolin_Defender
                 isTimerUp = true;
                 isPause = true;
                 isCoinDone = false;
-              //  player.playerPos = new Vector2(154, 465);
+             
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                      gameController.resetTimer();
@@ -663,16 +548,17 @@ namespace Shaolin_Defender
             spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1.5f, originCircle_2, 1.5f, SpriteEffects.None, 0);
             //cirlce 3 
              spriteBatch.Draw(mCircle_2, mCirclePos_3, null, Color.White, angle1*-1.5f, originCircle_2, 1.9f, SpriteEffects.None, 0);
-            //player
-            //spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, player.turnAngle, origin, 1.0f, SpriteEffects.None, 0);
+           
 
 
+            spriteBatch.Draw(safeZonePlat, safeZonePos, null, Color.Red, 0, originCircle_2, 1f, SpriteEffects.None, 1);
+            spriteBatch.Draw(winZonePlat, winZonePos, null, Color.Red, 0, originCircle_2, 1f, SpriteEffects.None, 1);
 
             //debug print
             //spriteBatch.DrawString(scoreFont, "Pos: " + player.isIdeal/* player.playerPos.X + "," + player.playerPos.Y*/, new Vector2(500, 350),Color.Black);
 
             //  spriteBatch.DrawString(scoreFont, "POs"+player.playerPos.X +" Y: "+ player.playerPos.Y , player.playerPos, Color.LightYellow); // score
-            //spriteBatch.DrawString(scoreFont, "POs" + countTimerMax, player.playerPos, Color.LightYellow);
+           // spriteBatch.DrawString(scoreFont, "POs" + newCoin.coinPos.Count, player.playerPos, Color.LightYellow);
 
             //spriteBatch.DrawString(scoreFont, "Pos: " + gameController.timer%8/* player.playerPos.X + "," + player.playerPos.Y*/, new Vector2(500, 350),Color.Black);
 
@@ -681,8 +567,6 @@ namespace Shaolin_Defender
             //            player.playerRectangle.Width = player.playerRectangle.Width / 4;
             //spriteBatch.Draw(whiteRectangle, coinsRectangle, Color.Red);
             //spriteBatch.Draw(whiteRectangle, winLine, Color.Red);
-            spriteBatch.Draw(safeZonePlat, safeZonePos, null, Color.Red, 0, originCircle_2, 1f, SpriteEffects.None, 1);
-            spriteBatch.Draw(winZonePlat, winZonePos, null, Color.Red, 0, originCircle_2, 1f, SpriteEffects.None, 1);
             // spriteBatch.Draw(whiteRectangle, safeZone, null, Color.Red, an, fireStickOrigin, 1.0f, SpriteEffects.None, 0);
             //if (isInside ==true)
             //{
@@ -698,23 +582,23 @@ namespace Shaolin_Defender
             //}
 
             // Coins
-            for (i = 0; i < coinPos.Count; i++)
+            for (i = 0; i < newCoin.coinPos.Count; i++)
             {
-                coinsRectangle = new Rectangle((int)(coinPos[i].X)-30, (int)(coinPos[i].Y-30), coins.Width/12, coins.Height/2);
+                coinsRectangle = new Rectangle((int)(newCoin.coinPos[i].X)-30, (int)(newCoin.coinPos[i].Y-30), coins.Width/12, coins.Height/2);
                 
-                //spriteBatch.Draw(coins, coinPos[i], null, Color.White, angle3, coinOrigin, 1.0f, SpriteEffects.None, 0);
-                coinAnimation.Draw(spriteBatch, coinsRectangle, coinPos[i],angle3, coinOrigin, 0.5f );
+                
+                coinAnimation.Draw(spriteBatch, coinsRectangle, newCoin.coinPos[i],angle3, coinOrigin, 0.5f );
             }
 
             // Fireballs
-            for (i = 0; i < fireStickPos.Count; i++)
+            for (i = 0; i < newFireBall.fireStickPos.Count; i++)
             {
-               spriteBatch.Draw(fireStick, fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 0);
+               spriteBatch.Draw(fireStick, newFireBall.fireStickPos[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 0);
             }
             //Moving Fireball
-            for (i = 0; i < fireStickPosMoving.Count; i++)
+            for (i = 0; i < newFireBall.fireStickPosMoving.Count; i++)
             {
-                spriteBatch.Draw(fireStick, fireStickPosMoving[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(fireStick, newFireBall.fireStickPosMoving[i], null, Color.White, angle1, fireStickOrigin, 1.0f, SpriteEffects.None, 0);
             }
 
             // Score & Timer
@@ -757,11 +641,11 @@ namespace Shaolin_Defender
             if (player.isIdeal == true)
             {
                 //play idle Animation
-                idlePlayerAnimation.Draw(spriteBatch, player.playerRectangle, player.playerPos, player.turnAngle, origin, 1.0f);
+                idlePlayerAnimation.Draw(spriteBatch, player.playerRectangle, player.playerPos, player.turnAngle, origin, 1.6f);
             }
             else
                 //play Player Run Animation
-                myPlayerAnimation.Draw(spriteBatch, player.playerRectangle, player.playerPos, player.turnAngle, origin, 1.0f);
+                myPlayerAnimation.Draw(spriteBatch, player.playerRectangle, player.playerPos, player.turnAngle, origin, 1.6f);
 
             //Coin Animation
             
