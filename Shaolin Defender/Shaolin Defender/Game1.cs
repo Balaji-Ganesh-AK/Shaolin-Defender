@@ -593,12 +593,12 @@ namespace Shaolin_Defender
                 }
             }
 
-            if (gameController.timer <= 0)
+            if (gameController.timer <= 0 )
             {
                 isTimerUp = true;
                 isPause = true;
                 isCoinDone = false;
-                player.playerPos = new Vector2(154, 465);
+              //  player.playerPos = new Vector2(154, 465);
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                      gameController.resetTimer();
