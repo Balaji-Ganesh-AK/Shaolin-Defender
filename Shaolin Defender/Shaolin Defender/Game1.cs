@@ -19,7 +19,7 @@ namespace Shaolin_Defender
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Song backgroundMusic;
-        List<SoundEffect> soundEffects = new List<SoundEffect>();
+        List<SoundEffect> soundEffects = new List<SoundEffect>(7);
         GameController gameController = new GameController();
         
         Player player = new Player();
@@ -79,12 +79,8 @@ namespace Shaolin_Defender
         // Gets width and height of the window
         private int widthWindow;
         private int heigthWindow;
-        
-        // Radius
-        float radius;
 
         // MovementControls
-        private float angle = 0; // angle rotation
         private float angle1 = 0; // angle for rotation of circle
         private float angle2 = 0; // rotation for wall type 1
         private float angle3 = 0; // rotation for wall type 2
@@ -101,7 +97,7 @@ namespace Shaolin_Defender
         bool isTimerUp = false;
 
         // Pause 
-        bool isPause = false;
+        bool isPause = false; 
 
         //test
         bool test = false;
@@ -109,8 +105,12 @@ namespace Shaolin_Defender
 
         //FireBall movement Controls;
         int countTimer = 0;
+
         int countTimerMax = 6;
         float speed =0;
+
+
+       
 
 
         public Game1()
@@ -124,7 +124,7 @@ namespace Shaolin_Defender
           //  backgroundPos6 = new Vector2(-450, 1624);
            
             startPlatPos = new Vector2(10, 220);
-            endPlatPos = new Vector2(3150,310);
+            endPlatPos = new Vector2(3150,620);
             player.playerPos = new Vector2(54, 390); // Controls the Player.playerPosition
             mCirclePos = new Vector2(700, 450);
             mCirclePos_2 = new Vector2(1450,800);
@@ -220,9 +220,9 @@ namespace Shaolin_Defender
 
             fireStick = this.Content.Load<Texture2D>("fireball");
             blur = this.Content.Load<Texture2D>("blur");
-
             scoreFont = Content.Load<SpriteFont>("Title");
             gameOverFont = Content.Load<SpriteFont>("GameOver");
+
 
             // playerRun = this.Content.Load<Texture2D>("playerRun");
             myPlayerAnimation = new Animation(Content, playerTexture, 100f, 4, true);
@@ -237,19 +237,30 @@ namespace Shaolin_Defender
 
             // Background Music
             backgroundMusic = Content.Load<Song>("new/castle_music");
+            MediaPlayer.Volume = .5f;
             MediaPlayer.Play(backgroundMusic);
+            MediaPlayer.IsRepeating = true;
             //test
             whiteRectangle = new Texture2D(GraphicsDevice,1,1);
             whiteRectangle.SetData(new[] { Color.White});
-
-            //soundEffects.Add(Content.Load<SoundEffect>("new/splosh"));
+            
             soundEffects.Add(Content.Load<SoundEffect>("new/coin_01"));
-            //soundEffects.Add(Content.Load<SoundEffect>("new/coin_02"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/coin_02"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/splosh"));
+            soundEffects.Add(Content.Load<SoundEffect>("new/hit_fire"));
+
             //sploshMusic = Content.Load<Song>("new/walking");
 
             var instance = soundEffects[0].CreateInstance();
+            var instance1 = soundEffects[1].CreateInstance();
+            var instance2 = soundEffects[2].CreateInstance();
+            var instance3 = soundEffects[3].CreateInstance();
             instance.IsLooped = true;
-           // instance.Play();
+            instance1.IsLooped = true;
+            instance2.IsLooped = true;
+            instance3.IsLooped = true;
+            //instance.IsLooped = true;
+            // instance.Play();
             // TODO: use this.Content to load your game content here
         }
 
@@ -290,8 +301,18 @@ namespace Shaolin_Defender
 
                 if (player.playerRectangle.Intersects(coinsRectangle))
                 {
-                   
-                    soundEffects[0].CreateInstance().Play();
+                    Random rnd = new Random();
+                    int r = rnd.Next(1, 4);
+                    if (r == 1 || r == 3)
+                    {
+                        SoundEffect.MasterVolume = .2f;
+                        soundEffects[0].CreateInstance().Play();
+                    }
+                    else if (r == 2 || r == 4)
+                    {
+                        SoundEffect.MasterVolume = .2f;
+                        soundEffects[1].CreateInstance().Play();
+                    }
                     isHit = true;
                     gameController.increaseScore();
                     coinPos.RemoveAt(i);
@@ -304,18 +325,21 @@ namespace Shaolin_Defender
                 isChange = false;
             for (int i = 0; i < fireStickPos.Count; i++)
             {
+
+                //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
+                ////fireStickRectangle = new Rectangle();
+
                
-            
+
+
                 if ((fireStickPos[i] - player.playerPos).Length() < 65)
                 {
-                    
+                    SoundEffect.MasterVolume = .25f;
+                    soundEffects[3].CreateInstance().Play();
                     isGameOver = true;
                 }
                 
             }
-            
-
-
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -323,7 +347,7 @@ namespace Shaolin_Defender
             // Keymovements
             if (isWinState == false && isPause == false)
             {
-                player.playerMovement( gameTime);
+                player.playerMovement(gameTime);
                 //myPlayerAnimation.Play(gameTime);
                 gameController.timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; // timer
                 countDown = gameController.timer.ToString("0.0");
@@ -335,6 +359,7 @@ namespace Shaolin_Defender
                 isInside = true;
                 test = true;
             }
+
             //Player ideal Animation;
             if (player.isIdeal == true)
             {
@@ -369,6 +394,7 @@ namespace Shaolin_Defender
 
                 player.playerRotation(dir);
             }
+
             for (int i = 0; i < fireStickPosMoving.Count; i++)
             {
                 //fireStickRectangle = new Rectangle((int)(fireStickPos[i].X)-60, (int)(fireStickPos[i].Y),60,60);
@@ -413,6 +439,7 @@ namespace Shaolin_Defender
 
             //angle += 1f;
 
+
             // Resets the game!
             if (isGameOver == true)
             {
@@ -443,9 +470,10 @@ namespace Shaolin_Defender
             if (test == true && isInside == false)
             {
 
-                
-                  isGameOver = true;
-                
+                if (player.playerRectangle.Intersects(safeZoneCirlce1To2) != true)
+                    isGameOver = true;
+                SoundEffect.MasterVolume = .5f;
+                soundEffects[2].CreateInstance().Play();
 
 
             }

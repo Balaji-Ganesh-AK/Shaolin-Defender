@@ -158,23 +158,35 @@
 /processorParam:Quality=Best
 /build:new/castle_music.mp3
 
-#begin new/coin_01.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:new/coin_01.mp3
-
 #begin new/coin_01.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:new/coin_01.wav
 
-#begin new/coin_02.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin new/coin_02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:new/coin_02.mp3
+/build:new/coin_02.wav
+
+#begin new/hit_fire.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/hit_fire.wav
+
+#begin playerRun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:playerRun.png
 
 #begin new/playerRunLeft.png
 /importer:TextureImporter
@@ -187,6 +199,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:new/playerRunLeft.png
+
+#begin new/splosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/splosh.wav
+
+#begin new/Walking_on_Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/Walking_on_Concrete.wav
 
 #begin Newbackground.png
 /importer:TextureImporter
@@ -211,18 +235,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:NewPlatform1.png
-
-#begin Platform1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Platform1.png
 
 #begin platform2.png
 /importer:TextureImporter
@@ -260,19 +272,7 @@
 /processorParam:TextureFormat=Color
 /build:playerRun.png
 
-#begin Purple Planet Music_Manhunt.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Purple Planet Music_Manhunt.mp3
-
-#begin Rising Tide.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Rising Tide.mp3;Rising_Tide.mp3
-
-#begin Run_Spritesheet_Left_4F.png
+#begin playerRun.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -282,7 +282,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Run_Spritesheet_Left_4F.png
+/build:playerRun.png
 
 #begin SpikePit.png
 /importer:TextureImporter
@@ -306,7 +306,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Start.png;Start_Line.png
+/build:Start.png
 
 #begin Start_platform.png
 /importer:TextureImporter
