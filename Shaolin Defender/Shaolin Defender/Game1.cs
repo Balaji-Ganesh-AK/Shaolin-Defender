@@ -111,7 +111,7 @@ namespace Shaolin_Defender
 
             // Object positions (x, y)
             backgroundPos5 = new Vector2(-600, -450);
-          //  backgroundPos6 = new Vector2(-450, 1624);
+            backgroundPos6 = new Vector2(3300, -450);
            
             startPlatPos = new Vector2(10, 220);
             endPlatPos = new Vector2(3150,620);
@@ -490,8 +490,8 @@ namespace Shaolin_Defender
             Vector2 coinOrigin = new Vector2(coins.Width / 2, coins.Height / 2);
 
             // Spikes
-            spriteBatch.Draw(background, backgroundPos5, null, Color.White, 0, backgroundOrigin, 2f, SpriteEffects.None, 0);
-            //spriteBatch.Draw(background, backgroundPos6, null, Color.White, 0, backgroundOrigin, 1.7f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos5, null, Color.White, 0, backgroundOrigin, 2, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos6, null, Color.White, 0, backgroundOrigin, 2, SpriteEffects.None, 0);
             //start_platform
             spriteBatch.Draw(startPlat, startPlatPos, null, Color.White, 0, originCircle, 1.5f, SpriteEffects.None, 0);
             //end_platform
