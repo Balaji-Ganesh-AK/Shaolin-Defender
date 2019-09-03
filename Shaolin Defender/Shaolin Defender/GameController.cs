@@ -38,7 +38,7 @@ namespace Shaolin_Defender
         }
         public void resetTimer()
         {
-            timer = 40.00f;
+            timer = 100.00f;
         }
         
     }

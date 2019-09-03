@@ -38,7 +38,7 @@ namespace Shaolin_Defender
                 turnAngle = 0;
                 isIdeal = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.A) && playerPos.X > 153)
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && playerPos.X > 54)
             {
                 playerPos.X -= speed;
                 turnAngle = (float)(90 * (Math.PI / 180));
