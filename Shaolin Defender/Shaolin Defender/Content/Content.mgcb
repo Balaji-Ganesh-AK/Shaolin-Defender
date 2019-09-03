@@ -140,6 +140,7 @@
 /processorParam:TextureFormat=Compressed
 /build:GameOver.spritefont
 
+
 #begin Newbackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -163,6 +164,31 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:NewPlatform1.png
+
+#begin new/castle_music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:new/castle_music.mp3
+
+#begin new/coin_01.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:new/coin_01.mp3
+
+#begin new/coin_01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:new/coin_01.wav
+
+#begin new/coin_02.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:new/coin_02.mp3
+
 
 #begin Platform1.png
 /importer:TextureImporter
