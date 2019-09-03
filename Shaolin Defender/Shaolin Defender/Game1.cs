@@ -43,11 +43,7 @@ namespace Shaolin_Defender
         
 
         // Vectors
-        Vector2 backgroundPos1, backgroundPos2, backgroundPos3, 
-            backgroundPos4, backgroundPos5, backgroundPos6, 
-            backgroundPos7, backgroundPos8, backgroundPos9,
-            backgroundPos10, backgroundPos11, backgroundPos12,
-            backgroundPos13, backgroundPos14, backgroundPos15;
+        Vector2  backgroundPos5, backgroundPos6;
         Vector2 startPlatPos;
         Vector2 endPlatPos;
         Vector2 mCirclePos;
@@ -120,28 +116,15 @@ namespace Shaolin_Defender
             Content.RootDirectory = "Content";
 
             // Object positions (x, y)
-            backgroundPos1 = new Vector2(-1024, 1024);
-            backgroundPos2 = new Vector2(-1024, 0);
-            backgroundPos3 = new Vector2(-1024, -1024);
-            backgroundPos4 = new Vector2(0, -1024);
-            backgroundPos5 = new Vector2(0, 0);
-            backgroundPos6 = new Vector2(0, 1024);
-            backgroundPos7 = new Vector2(1024, 1024);
-            backgroundPos8 = new Vector2(1024, 0);
-            backgroundPos9 = new Vector2(1024, -1024);
-            backgroundPos10 = new Vector2(2048, 1024);
-            backgroundPos11 = new Vector2(2048, 0);
-            backgroundPos12 = new Vector2(2048, -1024);
-            backgroundPos13 = new Vector2(3072, 1024);
-            backgroundPos14 = new Vector2(3072, 0);
-            backgroundPos15 = new Vector2(3072, -1024);
-
+            backgroundPos5 = new Vector2(-600, -450);
+          //  backgroundPos6 = new Vector2(-450, 1624);
+           
             startPlatPos = new Vector2(10, 220);
             endPlatPos = new Vector2(3150,310);
-            player.playerPos = new Vector2(154, 465); // Controls the Player.playerPosition
-            mCirclePos = new Vector2(750, 500);
-            mCirclePos_2 = new Vector2(1600,500);
-            mCirclePos_3 = new Vector2(2430,500);
+            player.playerPos = new Vector2(54, 390); // Controls the Player.playerPosition
+            mCirclePos = new Vector2(700, 450);
+            mCirclePos_2 = new Vector2(1450,800);
+            mCirclePos_3 = new Vector2(2350,750);
             blurPos = new Vector2(0, 0);
         }
 
@@ -211,9 +194,10 @@ namespace Shaolin_Defender
             // bgPlat = this.Content.Load<Texture2D>("background");
             startPlat = this.Content.Load<Texture2D>("Start_platform");
             endPlat = this.Content.Load<Texture2D>("End_platform");
-            mCircle = this.Content.Load<Texture2D>("NewPlatform1");
-            mCircle_2 = this.Content.Load< Texture2D>("platform2");
+            mCircle_2 = this.Content.Load<Texture2D>("platform2");
+            mCircle = this.Content.Load<Texture2D>("new/NewPlatform1");
             mCircle_3 = this.Content.Load<Texture2D>("platform3");
+
             scoreFont = Content.Load<SpriteFont>("Title");
             gameOverFont = Content.Load<SpriteFont>("GameOver");
             //Idle animation
@@ -224,6 +208,7 @@ namespace Shaolin_Defender
             playerTexture = this.Content.Load<Texture2D>("playerRun");
             //playerTextureLeft = this.Content.Load<Texture2D>("playerRunLeft");
             //Coin texture
+
             coins = this.Content.Load<Texture2D>("coin_1");
 
             fireStick = this.Content.Load<Texture2D>("fireball");
@@ -346,7 +331,7 @@ namespace Shaolin_Defender
                 countDown = gameController.timer.ToString("0.0");
             }
 
-            if ((player.playerPos - mCirclePos).Length() < 420 || (player.playerPos - mCirclePos_2).Length() < 420 || (player.playerPos - mCirclePos_3).Length() < 420)
+            if ((player.playerPos - mCirclePos).Length() < 420 || (player.playerPos - mCirclePos_2).Length() < 410 || (player.playerPos - mCirclePos_3).Length() < 490)
             {
                 isInside = true;
                 test = true;
@@ -370,12 +355,12 @@ namespace Shaolin_Defender
                 {
                     dir = mCirclePos - player.playerPos ;
                 }
-                if ((player.playerPos - mCirclePos_2).Length() < 420)
+                if ((player.playerPos - mCirclePos_2).Length() < 410)
                 {
                     dir = mCirclePos_2 - player.playerPos;
                     dir *= -1;
                 }
-                if ((player.playerPos - mCirclePos_3).Length() < 420)
+                if ((player.playerPos - mCirclePos_3).Length() < 490)
                 {
                     dir = mCirclePos_3 - player.playerPos;
                 }
@@ -487,7 +472,7 @@ namespace Shaolin_Defender
 
             // This controls the camera
             spriteBatch.Begin(SpriteSortMode.Texture, null, null, null, null, null, Matrix.CreateTranslation(
-                (graphics.PreferredBackBufferWidth/10 - player.playerPos.X + 400),
+                (graphics.PreferredBackBufferWidth/10 - player.playerPos.X + 235),
                 (graphics.PreferredBackBufferHeight/2 - player.playerPos.Y - 50), 0));
 
             Rectangle sourceRectangle = new Rectangle(0, 0, playerTexture.Width, playerTexture.Height);
@@ -503,21 +488,8 @@ namespace Shaolin_Defender
             Vector2 coinOrigin = new Vector2(coins.Width / 2, coins.Height / 2);
 
             // Spikes
-            spriteBatch.Draw(background, backgroundPos1, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos2, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos3, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos4, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos5, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos6, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos7, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos8, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos9, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos10, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos11, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos12, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos13, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos14, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(background, backgroundPos15, null, Color.OrangeRed, 0, backgroundOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(background, backgroundPos5, null, Color.White, 0, backgroundOrigin, 2f, SpriteEffects.None, 0);
+            //spriteBatch.Draw(background, backgroundPos6, null, Color.White, 0, backgroundOrigin, 1.7f, SpriteEffects.None, 0);
             //start_platform
             spriteBatch.Draw(startPlat, startPlatPos, null, Color.White, 0, originCircle, 1.5f, SpriteEffects.None, 0);
             //end_platform
@@ -525,9 +497,9 @@ namespace Shaolin_Defender
             //cirlce 1
             spriteBatch.Draw(mCircle, mCirclePos, null, Color.White, angle1, originCircle, 1.7f, SpriteEffects.None, 0);
             //cirlce 2 
-            spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1.5f, originCircle_2, 1.7f, SpriteEffects.None, 0);
+            spriteBatch.Draw(mCircle_2, mCirclePos_2, null, Color.White, angle1*-1.5f, originCircle_2, 1.5f, SpriteEffects.None, 0);
             //cirlce 3 
-             spriteBatch.Draw(mCircle_2, mCirclePos_3, null, Color.White, angle1*-1.5f, originCircle_2, 1.5f, SpriteEffects.None, 0);
+             spriteBatch.Draw(mCircle_2, mCirclePos_3, null, Color.White, angle1*-1.5f, originCircle_2, 1.9f, SpriteEffects.None, 0);
             //player
             //spriteBatch.Draw(playerTexture, player.playerPos, sourceRectangle, Color.White, player.turnAngle, origin, 1.0f, SpriteEffects.None, 0);
 
@@ -549,6 +521,13 @@ namespace Shaolin_Defender
             //{
             //   spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X +","+ player.playerPos.Y, new Vector2(1000,700), Color.Black);
 
+            //debug print
+            //spriteBatch.Draw(whiteRectangle,safeZoneCirlce1To2,Color.Red);
+            //if (isInside == true)
+            //{
+            //   spriteBatch.DrawString(scoreFont, "x , y " + player.playerPos.X +","+ player.playerPos.Y, new Vector2(1000,700), Color.Black);
+
+
             //}
 
             // Coins
@@ -564,37 +543,37 @@ namespace Shaolin_Defender
             }
 
             // Score & Timer
-            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.LightYellow); // timer
-            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.LightYellow); // score
+            spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 390, player.playerPos.Y + 520), Color.LightYellow); // timer
+            spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1160, player.playerPos.Y + 520), Color.LightYellow); // score
 
             // All coins collected text
             if (isCoinDone == true)
             {
-                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(player.playerPos.X, player.playerPos.Y - 470), Color.Orange);
+                spriteBatch.DrawString(scoreFont, "Hurry to the end!!!", new Vector2(player.playerPos.X + 160, player.playerPos.Y - 470), Color.Orange);
             }
 
             // GameOver State
             if (isTimerUp == true)
             {
-                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 550, player.playerPos.Y - 520), null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(player.playerPos.X - 100, player.playerPos.Y - 100), Color.Black); // end state text
-                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X, player.playerPos.Y + 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 235, player.playerPos.Y + 50), Color.DarkRed);
-                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 440, player.playerPos.Y + 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.Black); // timer
-                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.Black); // score
+                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 190, player.playerPos.Y - 320), null, Color.LightGray, 0, originCircle, 2.5f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(gameOverFont, "GAME OVER!", new Vector2(player.playerPos.X - 90, player.playerPos.Y - 100), Color.Black); // end state text
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X + 60, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 295, player.playerPos.Y + 50), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 500, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 390, player.playerPos.Y + 520), Color.LightYellow); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1160, player.playerPos.Y + 520), Color.LightYellow); // score
             }
 
             // Win State
             if (isWinState == true)
             {
-                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 550, player.playerPos.Y - 520), null, Color.White, 0, originCircle, 2.5f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(gameOverFont, "YOU WON!!", new Vector2(player.playerPos.X - 100, player.playerPos.Y - 100), Color.DarkOliveGreen);
-                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X, player.playerPos.Y + 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 235, player.playerPos.Y + 50), Color.DarkRed);
-                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 440, player.playerPos.Y + 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 550, player.playerPos.Y + 520), Color.Black); // timer
-                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1000, player.playerPos.Y + 520), Color.Black); // score
+                spriteBatch.Draw(blur, new Vector2(player.playerPos.X - 190, player.playerPos.Y - 320), null, Color.LightGray, 0, originCircle, 2.5f, SpriteEffects.None, 0);
+                spriteBatch.DrawString(gameOverFont, "YOU WON!!", new Vector2(player.playerPos.X + 10, player.playerPos.Y - 100), Color.DarkOliveGreen);
+                spriteBatch.DrawString(scoreFont, "(Press ", new Vector2(player.playerPos.X + 110, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Enter", new Vector2(player.playerPos.X + 345, player.playerPos.Y + 50), Color.DarkRed);
+                spriteBatch.DrawString(scoreFont, " to restart)", new Vector2(player.playerPos.X + 550, player.playerPos.Y + 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Time: " + countDown, new Vector2(player.playerPos.X - 390, player.playerPos.Y + 520), Color.LightYellow); // timer
+                spriteBatch.DrawString(scoreFont, "Score: " + gameController.getScore() + "/5", new Vector2(player.playerPos.X + 1160, player.playerPos.Y + 520), Color.LightYellow); // score
             }
 
 

@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../../../Desktop/Picture/playerRunLeft.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../../../Desktop/Picture/playerRunLeft.png;playerRunLeft.png
-
 #begin background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -140,6 +128,7 @@
 /processorParam:TextureFormat=Compressed
 /build:GameOver.spritefont
 
+
 #begin Idle_Player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -151,6 +140,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Idle_Player.png
+
 
 #begin new/castle_music.mp3
 /importer:Mp3Importer
@@ -176,6 +166,52 @@
 /processorParam:Quality=Best
 /build:new/coin_02.mp3
 
+
+#begin Newbackground.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+
+/build:Newbackground.png
+
+#begin NewPlatform1.png
+
+
+#begin playerRun.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+
+/build:NewPlatform1.png
+
+
+
+#begin new/playerRunLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:new/playerRunLeft.png
+
 #begin Newbackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -187,18 +223,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Newbackground.png
-
-#begin NewPlatform1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:NewPlatform1.png
 
 #begin Platform1.png
 /importer:TextureImporter
@@ -235,18 +259,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:platform3.png
-
-#begin playerRun.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:playerRun.png
 
 #begin Purple Planet Music_Manhunt.mp3
 /importer:Mp3Importer
