@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shaolin_Defender
 {
+       
     class GameController
     {
-        Game1 game1;
+       
         public int score;
         public float timer;
         public GameController()
@@ -20,22 +21,25 @@ namespace Shaolin_Defender
         {
             score++;
         }
-        public int getScore()
-        {
-            return score;
-        }
         public int checkWinState()
         {
-            if (score == 5)
+           
+            if (score == 11)
             {
                 return 1;
             }
             else
                 return 0;
         }
+        public int getScore()
+        {
+            return score;
+        }
         public void reset()
         {
             score = 0;
+            timer = 100.00f;
+
         }
         public void resetTimer()
         {

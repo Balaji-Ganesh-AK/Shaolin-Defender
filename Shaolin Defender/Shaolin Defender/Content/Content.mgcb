@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../../../Desktop/Picture/WinDab.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../../Desktop/Picture/WinDab.png;WinDab.png
+
 #begin background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -176,18 +188,6 @@
 /processorParam:Quality=Best
 /build:new/hit_fire.wav
 
-#begin playerRun.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:playerRun.png
-
 #begin new/playerRunLeft.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -259,18 +259,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:platform3.png
-
-#begin playerRun.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:playerRun.png
 
 #begin playerRun.png
 /importer:TextureImporter
