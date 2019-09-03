@@ -58,7 +58,6 @@ namespace Shaolin_Defender
         }
         public void playerRotation(Vector2 dir)
         {
-
             perpendicualr = new Vector2(-dir.Y, dir.X);
             playerPos -= perpendicualr * dragSpeed;
         }
