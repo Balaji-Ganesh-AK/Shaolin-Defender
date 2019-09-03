@@ -8,6 +8,7 @@ namespace Shaolin_Defender
 {
     class GameController
     {
+        Game1 game1;
         public int score;
         public float timer;
         public GameController()
@@ -39,6 +40,11 @@ namespace Shaolin_Defender
         public void resetTimer()
         {
             timer = 100.00f;
+        }
+        bool checkCondition()
+        {
+
+            return true;
         }
         
     }

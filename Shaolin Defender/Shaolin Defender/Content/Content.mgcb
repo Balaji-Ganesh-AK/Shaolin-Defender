@@ -61,6 +61,18 @@
 /processorParam:TextureFormat=Color
 /build:coin_1.png
 
+#begin coinAnimation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:coinAnimation.png
+
 #begin Cowboy_man.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -158,18 +170,6 @@
 /processorParam:Quality=Best
 /build:new/coin_02.wav
 
-#begin new/fire_crackle.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:new/fire_crackle.wav
-
-#begin new/Gear_Sounds.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:new/Gear_Sounds.wav
-
 #begin new/hit_fire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -236,18 +236,6 @@
 /processorParam:TextureFormat=Color
 /build:NewPlatform1.png
 
-#begin Platform1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Platform1.png
-
 #begin platform2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -284,6 +272,18 @@
 /processorParam:TextureFormat=Color
 /build:playerRun.png
 
+#begin playerRun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:playerRun.png
+
 #begin SpikePit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -306,7 +306,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Start.png;Start_Line.png
+/build:Start.png
 
 #begin Start_platform.png
 /importer:TextureImporter
