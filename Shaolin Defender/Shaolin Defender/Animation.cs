@@ -52,10 +52,19 @@ namespace Shaolin_Defender
                 timeElapsed = 0;
             }
         }
-        public void Draw(SpriteBatch sprite ,Vector2 position , float rotation , Vector2 origin)
+        public void Draw(SpriteBatch sprite ,Rectangle sourceRectangle, Vector2 position , float rotation , Vector2 origin)
         {
-            
-            sprite.Draw(animation, position, sourceRect,Color.White,rotation,origin, 1.0f,SpriteEffects.None , 0);
+            //origin = new Vector2(sourceRectangle.Width/9 , sourceRectangle.Height/9);
+            sprite.Draw(animation, position, sourceRect, Color.White , rotation , new Vector2(frameWidth/2,frameHeight/2), 1.0f,SpriteEffects.None,0);
+            //sprite.Draw(animation,sourceRectang, sourceRect,Color.White,rotation, origin, SpriteEffects.None , 0);
+            //sprite.Draw(animation, sourceRect, Color.White, rotation, origin, 1.0f, SpriteEffects.None, 0);
         }
+        //public void Draw(SpriteBatch sprite, Rectangle sourceRectangle, Vector2 position, float rotation, Vector2 origin)
+        //{
+        //    //origin = new Vector2(sourceRectangle.Width/9 , sourceRectangle.Height/9);
+        //    sprite.Draw(animation, position, sourceRect, Color.White, rotation, new Vector2(frameWidth / 2, frameHeight / 2), 1.0f, SpriteEffects.None, 0);
+        //    //sprite.Draw(animation,sourceRectang, sourceRect,Color.White,rotation, origin, SpriteEffects.None , 0);
+        //    //sprite.Draw(animation, sourceRect, Color.White, rotation, origin, 1.0f, SpriteEffects.None, 0);
+        //}
     }
 }
