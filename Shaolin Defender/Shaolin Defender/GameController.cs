@@ -31,6 +31,7 @@ namespace Shaolin_Defender
             else
                 return 0;
         }
+        //kabhsjdhhajkshdkljashdkjhakd
         public int getScore()
         {
             return score;
